@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 192.168.0.99:8848
+        namespace: 3c2b049a-f672-4612-bd62-b9b110a2a707
+        file-extension: yaml
+        prefix: shopping_admin_service
