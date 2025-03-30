@@ -1,5 +1,6 @@
 package com.owner.shopping_user_service;
 
+import com.owner.shopping_common.util.Md5Util;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,13 +10,9 @@ import org.springframework.data.redis.core.ValueOperations;
 @SpringBootTest
 class ShoppingUserServiceApplicationTests {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
     @Test
     void contextLoads() {
-        ValueOperations valueOperations = redisTemplate.opsForValue();
-        valueOperations.set("registerkey1",1);
-
+        System.out.println(Md5Util.encode("123123"));
     }
 
 }

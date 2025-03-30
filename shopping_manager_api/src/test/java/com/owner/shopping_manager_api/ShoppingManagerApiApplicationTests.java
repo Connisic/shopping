@@ -12,7 +12,7 @@ class ShoppingManagerApiApplicationTests {
     private PasswordEncoder encoder;
     @Test
     void contextLoads() {
-        String password = encoder.encode("baizhan");
+        String password = encoder.encode("123123");
         System.out.println(password);//$2a$10$HSKqInMg65XZQjel4ySqPu7/w5ITROjOpv4YxoXvKDBNh0wfVgIne
     }
 
