@@ -3,7 +3,6 @@ package com.owner.shopping_cart_customer_api.controller;
 import com.owner.shopping_common.pojo.CartGoods;
 import com.owner.shopping_common.result.BaseResult;
 import com.owner.shopping_common.service.CartService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.dubbo.config.annotation.DubboReference;

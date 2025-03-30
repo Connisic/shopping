@@ -2,7 +2,6 @@ package com.owner.shopping_order_service.service.Impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.owner.shopping_common.pojo.CartGoods;
 import com.owner.shopping_common.pojo.Orders;
