@@ -1,5 +1,9 @@
 package com.owner.shopping_order_service.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.owner.shopping_common.pojo.CartGoods;
 import com.owner.shopping_common.pojo.Orders;
 import com.owner.shopping_common.service.OrderService;
@@ -8,6 +12,7 @@ import com.owner.shopping_order_service.mapper.OrdersMapper;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,15 +20,17 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
 @DubboService
 @Transactional
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl extends ServiceImpl<OrdersMapper,Orders>  implements OrderService{
     @Autowired
     private CartGoodsMapper cartGoodsMapper;
 
     @Autowired
-    private OrdersMapper ordersMapper;
+    private RedisTemplate redisTemplate;
 
     @Autowired
     private RocketMQTemplate rocketMQTemplate;
@@ -54,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         }
         orders.setPayment(sum);
         //保存订单
-        ordersMapper.insert(orders);
+        super.save(orders);
 
         for (CartGoods cartGood : cartGoods) {
             //保存订单商品信息
@@ -71,17 +78,48 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void update(Orders orders) {
-        ordersMapper.updateById(orders);
+        super.updateById(orders);
     }
 
     @Override
     public Orders findById(String id) {
-        Orders orders = ordersMapper.findById(id);
+        //先从缓存拿
+        Orders orders = (Orders) redisTemplate.opsForValue().get("orders:" + id);
+        if (orders != null) {
+            return orders;
+        }
+        
+        // 检查是否存在空值标记
+        Boolean hasNullKey = redisTemplate.hasKey("orders:" + id);
+        if (Boolean.TRUE.equals(hasNullKey)) {
+            return null;
+        }
+        
+        // 缓存未命中，查询数据库
+        orders = super.getById(id);
+        
+        // 只有在订单存在时才缓存
+        if (orders != null) {
+            // 设置缓存，并设置过期时间
+            redisTemplate.opsForValue().set("orders:" + id, orders, 30, TimeUnit.MINUTES);
+        } else {
+            // 对于不存在的订单，设置一个空值标记，防止缓存穿透
+            redisTemplate.opsForValue().set("orders:" + id, "", 5, TimeUnit.MINUTES);
+        }
+        
         return orders;
     }
 
     @Override
     public List<Orders> findUserOrders(Long userId, Integer status) {
-        return ordersMapper.findOrdersByUserIdAndStatus(userId,status);
+        List<Orders> orders = super.list(new LambdaQueryWrapper<>(Orders.class)
+                .eq(ObjectUtils.isNotNull(userId), Orders::getUserId, userId)
+                .eq(ObjectUtils.isNotNull(status), Orders::getStatus, status));
+        for (Orders order : orders){
+            List<CartGoods> cartGoods = cartGoodsMapper.selectList(new LambdaQueryWrapper<>(CartGoods.class)
+                    .eq(CartGoods::getOrderId, order.getId()));
+            order.setCartGoods(cartGoods);
+        }
+        return orders;
     }
 }

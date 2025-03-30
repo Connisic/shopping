@@ -1,6 +1,8 @@
 package com.owner.shopping_order_service.listener;
 
 import com.owner.shopping_common.pojo.Orders;
+import com.owner.shopping_common.result.BusExceptiion;
+import com.owner.shopping_common.result.CodeEnum;
 import com.owner.shopping_common.service.OrderService;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
@@ -20,6 +22,9 @@ public class CheckOrdersListener implements RocketMQListener<String> {
     public void onMessage(String orderId) {
         //查询订单
         Orders orders = orderService.findById(orderId);
+        if (orders==null){
+            return;
+        }
         //判断订单是否支付
         if (orders.getStatus()==1){
             //订单关闭交易

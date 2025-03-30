@@ -69,6 +69,7 @@
         <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
         <lombok.version>1.18.30</lombok.version>
         <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <swagger.version>3.0.0</swagger.version>
     </properties>
 
 
@@ -129,6 +130,11 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -141,6 +147,8 @@
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
         </dependency>
     </dependencies>
+
+
 
 
     <!-- 插件 -->
