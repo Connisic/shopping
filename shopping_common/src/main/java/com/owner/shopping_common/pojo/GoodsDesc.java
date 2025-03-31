@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,4 +27,7 @@ public class GoodsDesc implements Serializable {
     private ProductType productType3;  // 三级类目
     private List<GoodsImage> images; // 商品图片
     private List<Specification> specifications; // 商品规格
+    private Integer sales;
+    private Double rating;
+    private Date createTime;
 }

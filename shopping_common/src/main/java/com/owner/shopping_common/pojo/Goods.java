@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +26,9 @@ public class Goods implements Serializable {
     private String headerPic; // 头图
     private Boolean isMarketable; // 是否上架
     private String introduction; // 商品介绍
+    private Integer sales;
+    private Double rating;
+    private Date createTime;
     @TableField(exist = false)
     private List<GoodsImage> images; // 商品图片
     @TableField(exist = false)

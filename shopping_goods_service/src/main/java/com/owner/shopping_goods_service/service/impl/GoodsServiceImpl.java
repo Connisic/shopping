@@ -2,6 +2,7 @@ package com.owner.shopping_goods_service.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.owner.shopping_common.pojo.*;
 import com.owner.shopping_common.result.BusExceptiion;
 import com.owner.shopping_common.result.CodeEnum;
@@ -26,7 +27,7 @@ import java.util.List;
 
 @DubboService
 @Transactional
-public class GoodsServiceImpl implements GoodsService {
+public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements GoodsService {
     @DubboReference
     private FileService fileService;
 
@@ -218,11 +219,17 @@ public class GoodsServiceImpl implements GoodsService {
     }
     //查询所有商品详情
     @Override
-    public List<GoodsDesc> findAll() {
+    public List<GoodsDesc> findAllDesc() {
         List<GoodsDesc> all = goodsMapper.findAll();
         return all;
     }
 
+    //查询所有商品
+    @Override
+    public List<Goods> findAll() {
+        List<Goods> goods = this.list();
+        return goods;
+    }
     @Override
     public GoodsDesc findDesc(Long id) {
         return goodsMapper.findDesc(id);

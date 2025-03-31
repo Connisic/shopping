@@ -52,7 +52,9 @@ public enum CodeEnum {
 
     NO_USER_GOODS_ERROR(617,"不存在用户名/商品名"),
 
-    DATA_VIOLATION_ERROR(618,"数据访问异常");
+    DATA_VIOLATION_ERROR(618,"数据访问异常"),
+
+    UPDATE_MATRIX_ERROR(619,"更新相似度矩阵失败" );
     private final  Integer code;
 
     private final String message;
