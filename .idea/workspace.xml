@@ -1,0 +1,746 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/Goods.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/GoodsDesc.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/GoodsDesc.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/UserGoodsScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/UserGoodsScore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/result/CodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/result/CodeEnum.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/GoodsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/GoodsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/RecommendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/service/Impl/RecommendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/service/Impl/RecommendServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/uitl/CollaborativeFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/uitl/CollaborativeFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/test/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/test/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplicationTests.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/shopping_search_service/src/test/java/com/owner/shopping_search_service/ShoppingSearchServiceApplicationTests.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/shopping_search_service/src/main/resources/bootstrap.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/shopping_search_service/pom.xml" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="customMavenHome" value="$PROJECT_DIR$/../../apache-maven-3.8.3-bin/apache-maven-3.8.3" />
+        <option name="localRepository" value="D:\repository" />
+        <option name="mavenHomeTypeForPersistence" value="CUSTOM" />
+        <option name="userSettingsFile" value="D:\apache-maven-3.8.3-bin\apache-maven-3.8.3\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenRunner">
+    <option name="skipTests" value="true" />
+    <option name="vmOptions" value="-Xms256m -Xmx1024m" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2im5kG5aQUNzpBijWsfpEiPm0e5" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+    <option name="showVisibilityIcons" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.ShoppingFileServiceApplication.executor": "Run",
+    "Application.ShoppingGoodsServiceApplication.executor": "Run",
+    "JUnit.ShoppingGoodsServiceApplicationTests.contextLoads.executor": "Run",
+    "JUnit.ShoppingManagerApiApplicationTests.contextLoads.executor": "Run",
+    "JUnit.ShoppingRecommendServiceApplicationTests.contextLoads.executor": "Run",
+    "JUnit.ShoppingSeckillServiceApplicationTests.contextLoads.executor": "Run",
+    "JUnit.ShoppingUserCustomerApiApplicationTests.contextLoads.executor": "Run",
+    "JUnit.ShoppingUserServiceApplicationTests.contextLoads.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.ShoppingAdminServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingCartCustomerApiApplication.executor": "Debug",
+    "Spring Boot.ShoppingCartServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingCategoryCustomerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingCategoryServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingFileServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingGoodsServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingManagerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingMessageServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingOrderCustomerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingOrderServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingPayServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingRecommendServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingSearchCustomerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingSearchServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingSeckillCustomerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingSeckillServiceApplication.executor": "Run",
+    "Spring Boot.ShoppingUserCustomerApiApplication.executor": "Run",
+    "Spring Boot.ShoppingUserServiceApplication.executor": "Run",
+    "StatusDashboardGroupingRule": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "dev",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "B:/下载/tongyi-jetbrains-latest.zip",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "ChangesTree.GroupingKeys": [
+      "directory",
+      "module"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\JAVA\shopping\shopping_recommend_service\src\main\java\com\owner\shopping_recommend_service" />
+      <recent name="D:\JAVA\shopping\shopping_recommend_api\src\main\resources" />
+      <recent name="D:\JAVA\shopping\shopping_order_service\src\main\resources" />
+      <recent name="D:\JAVA\shopping\shopping_order_customer_api\src\main\resources" />
+      <recent name="D:\JAVA\shopping\shopping_seckill_customer_api\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources\META-INF" />
+      <recent name="D:\JAVA\shopping\shopping_cart_service\src\main\resources\META-INF" />
+      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources" />
+      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources\com\owner\shopping_goods_service" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.owner.shopping_common" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="src.test.java.com.owner.shopping_pay_service" />
+      <recent name="com.owner.shopping_cart_service.litener" />
+      <recent name="com.owner.shopping_search_service.listener" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="CompoundRunConfigurationType" />
+        <option value="KtorApplicationConfigurationType" />
+        <option value="MicronautRunConfigurationType" />
+        <option value="QuarkusRunConfigurationType" />
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.ShoppingOrderServiceApplication">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingRecommendServiceApplicationTests.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="shopping_recommend_service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.owner.shopping_recommend_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.owner.shopping_recommend_service" />
+      <option name="MAIN_CLASS_NAME" value="com.owner.shopping_recommend_service.ShoppingRecommendServiceApplicationTests" />
+      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingAdminServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_admin_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_admin_service.ShoppingAdminServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingCartCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_cart_customer_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_cart_customer_api.ShoppingCartCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingCartServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_cart_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_cart_service.ShoppingCartServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingCategoryCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_category_customer_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_category_customer_api.ShoppingCategoryCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingCategoryServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_category_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_category_service.ShoppingCategoryServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingFileServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_file_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_file_service.ShoppingFileServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingGoodsServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_goods_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_goods_service.ShoppingGoodsServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingManagerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_manager_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_manager_api.ShoppingManagerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingMessageServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_message_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_message_service.ShoppingMessageServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingOrderCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_order_customer_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_order_customer_api.ShoppingOrderCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingOrderServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="shopping_order_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_order_service.ShoppingOrderServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.owner.shopping_order_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingPayServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_pay_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_pay_service.ShoppingPayServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingRecommendApiApplication " type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_recommend_api" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.ShoppingRecommendApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingRecommendServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="shopping_recommend_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_recommend_service.ShoppingRecommendServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingSearchCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_search_customer_api" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_search_customer_api.ShoppingSearchCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingSearchServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_search_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_search_service.ShoppingSearchServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingSeckillCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_seckill_customer_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_seckill_customer_api.ShoppingSeckillCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingSeckillServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_seckill_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_seckill_service.ShoppingSeckillServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingUserCustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_user_customer_api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_user_customer_api.ShoppingUserCustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShoppingUserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="shopping_user_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.owner.shopping_user_service.ShoppingUserServiceApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="JUnit.ShoppingRecommendServiceApplicationTests.contextLoads" />
+      <item itemvalue="Spring Boot.ShoppingRecommendServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingAdminServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingCartCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingCartServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingCategoryCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingCategoryServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingFileServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingGoodsServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingManagerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingMessageServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingOrderCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingPayServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingRecommendApiApplication " />
+      <item itemvalue="Spring Boot.ShoppingSearchCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingSearchServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingSeckillCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingSeckillServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingUserCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingUserServiceApplication" />
+      <item itemvalue="Spring Boot.ShoppingOrderServiceApplication" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.ShoppingOrderServiceApplication" />
+        <item itemvalue="JUnit.ShoppingRecommendServiceApplicationTests.contextLoads" />
+        <item itemvalue="Spring Boot.ShoppingOrderServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="" />
+      <created>1720083053194</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1720083053194</updated>
+      <workItem from="1720083054361" duration="325000" />
+      <workItem from="1720083536143" duration="3213000" />
+      <workItem from="1720091011371" duration="1277000" />
+      <workItem from="1720097516653" duration="383000" />
+      <workItem from="1720103224010" duration="60000" />
+      <workItem from="1720141248947" duration="2312000" />
+      <workItem from="1720146217811" duration="1299000" />
+      <workItem from="1720147537955" duration="253000" />
+      <workItem from="1720147803652" duration="599000" />
+      <workItem from="1720148417295" duration="5049000" />
+      <workItem from="1720163746546" duration="8335000" />
+      <workItem from="1720177282514" duration="4877000" />
+      <workItem from="1720182522369" duration="1231000" />
+      <workItem from="1720227090057" duration="6761000" />
+      <workItem from="1720245501301" duration="11437000" />
+      <workItem from="1720275649081" duration="3193000" />
+      <workItem from="1720318371671" duration="10377000" />
+      <workItem from="1720336688687" duration="7363000" />
+      <workItem from="1720400786663" duration="76000" />
+      <workItem from="1720408007204" duration="3065000" />
+      <workItem from="1720418680316" duration="597000" />
+      <workItem from="1720420138701" duration="11363000" />
+      <workItem from="1720434368250" duration="926000" />
+      <workItem from="1720439078320" duration="1377000" />
+      <workItem from="1720488379460" duration="17000" />
+      <workItem from="1720494321239" duration="2788000" />
+      <workItem from="1720506743627" duration="5007000" />
+      <workItem from="1720517214067" duration="5198000" />
+      <workItem from="1720583367247" duration="12096000" />
+      <workItem from="1720605006926" duration="591000" />
+      <workItem from="1720609998045" duration="18000" />
+      <workItem from="1720662984380" duration="468000" />
+      <workItem from="1720663470423" duration="99000" />
+      <workItem from="1720663607417" duration="122000" />
+      <workItem from="1720663753712" duration="120000" />
+      <workItem from="1720663890230" duration="231000" />
+      <workItem from="1720664134879" duration="239000" />
+      <workItem from="1720664386800" duration="77000" />
+      <workItem from="1720664480613" duration="261000" />
+      <workItem from="1720664757700" duration="262000" />
+      <workItem from="1720665035240" duration="2672000" />
+      <workItem from="1720786338580" duration="3319000" />
+      <workItem from="1720944057679" duration="9675000" />
+      <workItem from="1720970670943" duration="2491000" />
+      <workItem from="1721001682247" duration="27632000" />
+      <workItem from="1721091345265" duration="29021000" />
+      <workItem from="1721180124166" duration="3580000" />
+      <workItem from="1721186954413" duration="23188000" />
+      <workItem from="1721264301760" duration="32659000" />
+      <workItem from="1721353073788" duration="23457000" />
+      <workItem from="1721444946475" duration="8399000" />
+      <workItem from="1721523658112" duration="3752000" />
+      <workItem from="1721543786492" duration="3541000" />
+      <workItem from="1721662262531" duration="3083000" />
+      <workItem from="1721798824167" duration="219000" />
+      <workItem from="1721804655042" duration="6000" />
+      <workItem from="1722130399611" duration="1092000" />
+      <workItem from="1722997673295" duration="3053000" />
+      <workItem from="1723013938037" duration="57000" />
+      <workItem from="1723683469463" duration="185000" />
+      <workItem from="1723771130227" duration="12000" />
+      <workItem from="1724165987979" duration="1606000" />
+      <workItem from="1724317520365" duration="29000" />
+      <workItem from="1724390994099" duration="294000" />
+      <workItem from="1724398367581" duration="868000" />
+      <workItem from="1724562413805" duration="1572000" />
+      <workItem from="1725021716891" duration="3834000" />
+      <workItem from="1725113534390" duration="45000" />
+      <workItem from="1727253645503" duration="2368000" />
+      <workItem from="1727574755260" duration="37000" />
+      <workItem from="1728631656847" duration="1025000" />
+      <workItem from="1728634032701" duration="1356000" />
+      <workItem from="1729135565140" duration="3385000" />
+      <workItem from="1730258297868" duration="2176000" />
+      <workItem from="1731243387998" duration="1707000" />
+      <workItem from="1731335854902" duration="20000" />
+      <workItem from="1731336148748" duration="6000" />
+      <workItem from="1731758871394" duration="475000" />
+      <workItem from="1731760216383" duration="1263000" />
+      <workItem from="1731761909537" duration="766000" />
+      <workItem from="1731849499953" duration="20000" />
+      <workItem from="1732693863287" duration="4708000" />
+      <workItem from="1732800015532" duration="3188000" />
+      <workItem from="1732805793794" duration="2924000" />
+      <workItem from="1733130375695" duration="8017000" />
+      <workItem from="1733240929501" duration="763000" />
+      <workItem from="1733647058259" duration="6648000" />
+      <workItem from="1733761212391" duration="6917000" />
+      <workItem from="1733818034259" duration="963000" />
+      <workItem from="1733819965675" duration="9796000" />
+      <workItem from="1733933459436" duration="4368000" />
+      <workItem from="1733995049753" duration="4276000" />
+      <workItem from="1734247272253" duration="5775000" />
+      <workItem from="1734766838118" duration="4319000" />
+      <workItem from="1734786543314" duration="1161000" />
+      <workItem from="1734794802681" duration="785000" />
+      <workItem from="1734797541533" duration="218000" />
+      <workItem from="1735456431402" duration="1186000" />
+      <workItem from="1735458828588" duration="9006000" />
+      <workItem from="1735979651284" duration="3815000" />
+      <workItem from="1736004609208" duration="1388000" />
+      <workItem from="1738663518457" duration="2053000" />
+      <workItem from="1738736137991" duration="2575000" />
+      <workItem from="1738758862374" duration="6263000" />
+      <workItem from="1738823449607" duration="4033000" />
+      <workItem from="1738908253351" duration="7028000" />
+      <workItem from="1739001293173" duration="10008000" />
+      <workItem from="1739118443501" duration="695000" />
+      <workItem from="1739122141279" duration="1551000" />
+      <workItem from="1739168985373" duration="1805000" />
+      <workItem from="1739170823364" duration="11433000" />
+      <workItem from="1739197039332" duration="1104000" />
+      <workItem from="1740215102085" duration="652000" />
+      <workItem from="1740237541383" duration="596000" />
+      <workItem from="1740291952927" duration="654000" />
+      <workItem from="1740406924839" duration="20000" />
+      <workItem from="1740799122913" duration="547000" />
+      <workItem from="1740800115426" duration="5000" />
+      <workItem from="1740801179201" duration="980000" />
+      <workItem from="1740802178497" duration="2111000" />
+      <workItem from="1740804439516" duration="1714000" />
+      <workItem from="1740806168707" duration="53000" />
+      <workItem from="1740806229464" duration="12000" />
+      <workItem from="1740806249875" duration="92000" />
+      <workItem from="1740806349484" duration="834000" />
+      <workItem from="1740807193381" duration="2456000" />
+      <workItem from="1740809701780" duration="204000" />
+      <workItem from="1740809912999" duration="1758000" />
+      <workItem from="1740834201914" duration="11000" />
+      <workItem from="1742949705823" duration="454000" />
+      <workItem from="1742995740349" duration="2674000" />
+      <workItem from="1742999793839" duration="797000" />
+      <workItem from="1743081576503" duration="1680000" />
+      <workItem from="1743228235419" duration="7000" />
+      <workItem from="1743315479361" duration="20000" />
+      <workItem from="1743315506997" duration="1470000" />
+      <workItem from="1743316990113" duration="9871000" />
+      <workItem from="1743345961709" duration="5015000" />
+      <workItem from="1743433270420" duration="5015000" />
+    </task>
+    <task id="LOCAL-00001" summary="最初版本，在ES服务添加了每天凌晨三点和数据库同步">
+      <option name="closed" value="true" />
+      <created>1740811388758</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1740811388758</updated>
+    </task>
+    <task id="LOCAL-00002" summary="最初版本，在ES服务添加了每天凌晨三点和数据库同步">
+      <option name="closed" value="true" />
+      <created>1740811609117</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1740811609117</updated>
+    </task>
+    <task id="LOCAL-00003" summary="dev开发">
+      <option name="closed" value="true" />
+      <created>1743316428335</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743316428335</updated>
+    </task>
+    <task id="LOCAL-00004" summary="dev开发">
+      <option name="closed" value="true" />
+      <created>1743316461184</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743316461184</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743349306284</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1743349306284</updated>
+    </task>
+    <task id="LOCAL-00006" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743349426979</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1743349426979</updated>
+    </task>
+    <task id="LOCAL-00007" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743349433345</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1743349433345</updated>
+    </task>
+    <task id="LOCAL-00008" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743349507924</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1743349507924</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743349526987</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743349526987</updated>
+    </task>
+    <task id="LOCAL-00010" summary="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
+      <option name="closed" value="true" />
+      <created>1743350215596</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1743350215596</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="dev" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="最初版本，在ES服务添加了每天凌晨三点和数据库同步" />
+    <MESSAGE value="dev开发" />
+    <MESSAGE value="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_search_service/src/test/java/com/owner/shopping_search_service/ShoppingSearchServiceApplicationTests.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_user_customer_api/src/main/java/com/owner/shopping_user_customer_api/controller/ShoppingUserController.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_manager_api/src/main/java/com/owner/shopping_manager_api/controller/CategoryController.java</url>
+          <line>56</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_category_service/src/main/java/com/owner/shopping_category_service/service/Impl/CategoryServiceImpl.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_recommend_api/src/main/java/com/owner/shopping_recommend_api/controller/RecommendController.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java</url>
+          <line>129</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_cart_customer_api/src/main/java/com/owner/shopping_cart_customer_api/controller/CartController.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="62" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_cart_service/src/main/java/com/owner/shopping_cart_service/service/Impl/CartServiceImpl.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/shopping_order_service/src/main/java/com/owner/shopping_order_service/service/Impl/OrderServiceImpl.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/shopping_category_service/src/main/java/com/owner/shopping_category_service/service/Impl/CategoryServiceImpl.java</url>
+          <line>26</line>
+          <properties class="com.owner.shopping_category_service.service.Impl.CategoryServiceImpl" method="add">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.owner.shopping_common.result.BusExceptiion" memberName="message" />
+      </pinned-members>
+    </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="bizContent" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

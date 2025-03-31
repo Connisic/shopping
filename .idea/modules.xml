@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/shopping_admin_service/shopping_admin_service.iml" filepath="$PROJECT_DIR$/shopping_admin_service/shopping_admin_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_cart_customer_api/shopping_cart_customer_api.iml" filepath="$PROJECT_DIR$/shopping_cart_customer_api/shopping_cart_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_cart_service/shopping_cart_service.iml" filepath="$PROJECT_DIR$/shopping_cart_service/shopping_cart_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_category_customer_api/shopping_category_customer_api.iml" filepath="$PROJECT_DIR$/shopping_category_customer_api/shopping_category_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_category_service/shopping_category_service.iml" filepath="$PROJECT_DIR$/shopping_category_service/shopping_category_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_common/shopping_common.iml" filepath="$PROJECT_DIR$/shopping_common/shopping_common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_file_service/shopping_file_service.iml" filepath="$PROJECT_DIR$/shopping_file_service/shopping_file_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_goods_service/shopping_goods_service.iml" filepath="$PROJECT_DIR$/shopping_goods_service/shopping_goods_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_manager_api/shopping_manager_api.iml" filepath="$PROJECT_DIR$/shopping_manager_api/shopping_manager_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_message_service/shopping_message_service.iml" filepath="$PROJECT_DIR$/shopping_message_service/shopping_message_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_order_customer_api/shopping_order_customer_api.iml" filepath="$PROJECT_DIR$/shopping_order_customer_api/shopping_order_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_order_service/shopping_order_service.iml" filepath="$PROJECT_DIR$/shopping_order_service/shopping_order_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_pay_service/shopping_pay_service.iml" filepath="$PROJECT_DIR$/shopping_pay_service/shopping_pay_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_recommend_api/shopping_recommend_api.iml" filepath="$PROJECT_DIR$/shopping_recommend_api/shopping_recommend_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_recommend_service/shopping_recommend_service.iml" filepath="$PROJECT_DIR$/shopping_recommend_service/shopping_recommend_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_search_customer_api/shopping_search_customer_api.iml" filepath="$PROJECT_DIR$/shopping_search_customer_api/shopping_search_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_search_service/shopping_search_service.iml" filepath="$PROJECT_DIR$/shopping_search_service/shopping_search_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_seckill_customer_api/shopping_seckill_customer_api.iml" filepath="$PROJECT_DIR$/shopping_seckill_customer_api/shopping_seckill_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_seckill_service/shopping_seckill_service.iml" filepath="$PROJECT_DIR$/shopping_seckill_service/shopping_seckill_service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_user_customer_api/shopping_user_customer_api.iml" filepath="$PROJECT_DIR$/shopping_user_customer_api/shopping_user_customer_api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shopping_user_service/shopping_user_service.iml" filepath="$PROJECT_DIR$/shopping_user_service/shopping_user_service.iml" />
+    </modules>
+  </component>
+</project>
