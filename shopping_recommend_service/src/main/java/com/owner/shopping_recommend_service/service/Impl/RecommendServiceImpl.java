@@ -3,7 +3,6 @@ package com.owner.shopping_recommend_service.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.owner.shopping_common.pojo.Goods;
-import com.owner.shopping_common.pojo.GoodsDesc;
 import com.owner.shopping_common.pojo.ShoppingUser;
 import com.owner.shopping_common.pojo.UserGoodsScore;
 import com.owner.shopping_common.result.BusExceptiion;
@@ -11,7 +10,6 @@ import com.owner.shopping_common.result.CodeEnum;
 import com.owner.shopping_common.service.GoodsService;
 import com.owner.shopping_common.service.RecommendService;
 import com.owner.shopping_common.service.ShoppingUserService;
-import com.owner.shopping_recommend_service.mapper.GoodsMapper;
 import com.owner.shopping_recommend_service.mapper.UserGoodsScoreMapper;
 import com.owner.shopping_recommend_service.uitl.CollaborativeFilter;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +27,10 @@ import java.util.stream.Collectors;
 public class RecommendServiceImpl implements RecommendService {
     @Autowired
     private UserGoodsScoreMapper userGoodsScoreMapper;
-    @Autowired
-    private GoodsMapper goodsMapper;
     //注入协同过滤工具类
     @Autowired
     private CollaborativeFilter filter;
+
     //注入用户服务
     @DubboReference
     private ShoppingUserService userService;
@@ -58,7 +55,7 @@ public class RecommendServiceImpl implements RecommendService {
             throw new BusExceptiion(CodeEnum.SYSTEM_ERROR);
         }
         
-        List<Goods> allRecommend = goodsMapper.selectBatchIds(batchIds);
+        List<Goods> allRecommend = goodsService.findByIds(batchIds);
         goods.setRecords(allRecommend);
         goods.setTotal(allRecommend.size());
         goods.setSize(Math.min(size, recommendations.size() - page * size));

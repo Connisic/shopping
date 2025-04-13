@@ -8,7 +8,6 @@ import com.owner.shopping_common.result.BusExceptiion;
 import com.owner.shopping_common.result.CodeEnum;
 import com.owner.shopping_common.service.FileService;
 import com.owner.shopping_common.service.GoodsService;
-import com.owner.shopping_common.service.SearchService;
 import com.owner.shopping_goods_service.mapper.GoodsImageMapper;
 import com.owner.shopping_goods_service.mapper.GoodsMapper;
 import com.owner.shopping_goods_service.mapper.SpecificationMapper;
@@ -21,7 +20,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -238,6 +236,11 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
     @Override
     public void delete(Long id) {
         goodsMapper.deleteById(id);
+    }
+
+    @Override
+    public List<Goods> findByIds(List<Long> ids) {
+        return this.listByIds(ids);
     }
 
 

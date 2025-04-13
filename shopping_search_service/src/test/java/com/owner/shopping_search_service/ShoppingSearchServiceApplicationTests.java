@@ -25,14 +25,14 @@ class ShoppingSearchServiceApplicationTests {
         System.out.println(analyze);
     }
 
-    @Test
-    void testSyncGoodsToES(){
-        List<GoodsDesc> all = goodsService.findAll();
-        for (GoodsDesc goodsDesc : all) {
-            if (goodsDesc.getIsMarketable()==true){
-                service.SyncGoodsToES(goodsDesc);
-            }
-        }
-    }
+//    @Test
+//    void testSyncGoodsToES(){
+//        List<GoodsDesc> all = goodsService.findAll();
+//        for (GoodsDesc goodsDesc : all) {
+//            if (goodsDesc.getIsMarketable()==true){
+//                service.SyncGoodsToES(goodsDesc);
+//            }
+//        }
+//    }
 
 }

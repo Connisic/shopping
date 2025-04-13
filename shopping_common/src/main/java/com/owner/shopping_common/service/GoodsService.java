@@ -1,10 +1,8 @@
 package com.owner.shopping_common.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.owner.shopping_common.pojo.Goods;
 import com.owner.shopping_common.pojo.GoodsDesc;
-import org.apache.catalina.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +27,10 @@ public interface GoodsService  {
     List<Goods> findAll();
     //根据id查询商品详情
     GoodsDesc findDesc(Long id);
+
     //根据id删除商品
     void delete(Long id);
+
+    //根据id批量查询商品
+    List<Goods> findByIds(List<Long> ids);
 }

@@ -1,5 +1,0 @@
-com\owner\shopping_recommend_service\uitl\CollaborativeFilter.class
-com\owner\shopping_recommend_service\service\Impl\RecommendServiceImpl.class
-com\owner\shopping_recommend_service\ShoppingRecommendServiceApplication.class
-com\owner\shopping_recommend_service\mapper\GoodsMapper.class
-com\owner\shopping_recommend_service\mapper\UserGoodsScoreMapper.class

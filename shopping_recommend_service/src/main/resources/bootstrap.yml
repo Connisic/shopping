@@ -4,7 +4,13 @@ spring:
   cloud:
     nacos:
       config:
-        server-addr: 192.168.0.99:8848
-        namespace: 3c2b049a-f672-4612-bd62-b9b110a2a707
+        username: nacos
+        password: nacos
+        server-addr: 101.37.84.232:8848
+        namespace: 59d463e9-731f-4545-9697-8de823cffeac
         file-extension: yaml
         prefix: shopping_recommend_service
+dubbo:
+  registry:
+    username: nacos
+    password: nacos

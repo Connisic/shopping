@@ -13,4 +13,14 @@ public class RandomUtil {
         }
         return sb.toString();
     }
+    public static double getRandom(double min,double max){
+        Random random = new Random();
+        double s = random.nextDouble();
+        double result = min + s * (max - min);
+        return Double.parseDouble(String.format("%.1f",result));
+    }
+    public static int getRandom(int min,int max){
+        Random random = new Random();
+        return random.nextInt(max)%(max-min+1) + min;
+    }
 }

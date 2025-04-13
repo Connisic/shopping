@@ -153,6 +153,7 @@
 
     <!-- 插件 -->
     <build>
+        <finalName>app</finalName>
         <plugins>
 <!--            <plugin>-->
 <!--                <groupId>org.apache.maven.plugins</groupId>-->
@@ -163,20 +164,20 @@
 <!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-<!--                <version>3.12.1</version>-->
-                <configuration>
-                    <basedir/>
-                    <buildDirectory/>
-                    <mainOutputDirectory/>
-                    <outputDirectory/>
-                    <projectArtifact/>
-                    <source>17</source>
-                    <target>17</target>
-                </configuration>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--&lt;!&ndash;                <version>3.12.1</version>&ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <basedir/>-->
+<!--                    <buildDirectory/>-->
+<!--                    <mainOutputDirectory/>-->
+<!--                    <outputDirectory/>-->
+<!--                    <projectArtifact/>-->
+<!--                    <source>17</source>-->
+<!--                    <target>17</target>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
@@ -185,8 +186,19 @@
                     <skipTests>true</skipTests>    <!--默认关掉单元测试 -->
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.13</version>
+                <configuration>
+                    <repository>docker_storage/${project.build.finalName}</repository>
+                    <buildArgs>
+                        <JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+                    </buildArgs>
+                </configuration>
+            </plugin>
         </plugins>
+
     </build>
 
 

@@ -5,22 +5,94 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式">
-      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/Goods.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/Goods.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_admin_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_admin_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_admin_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_admin_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_cart_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_cart_customer_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_customer_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_cart_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_cart_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_category_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_category_customer_api/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_customer_api/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_category_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_category_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/GoodsDesc.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/GoodsDesc.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/UserGoodsScore.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/pojo/UserGoodsScore.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/result/CodeEnum.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/result/CodeEnum.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/GoodsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/GoodsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/RecommendService.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/service/RecommendService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/util/RandomUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/src/main/java/com/owner/shopping_common/util/RandomUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_file_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_file_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_file_service/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_file_service/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_goods_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_goods_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_manager_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_manager_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_manager_api/src/main/resources/bootstrap.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_manager_api/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_message_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_message_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_message_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_message_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_order_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_order_customer_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_customer_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_order_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_order_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_pay_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_pay_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_pay_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_pay_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/classes/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/classes/com/owner/ShoppingRecommendApiApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/classes/com/owner/shopping_recommend_api/controller/RecommendController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/shopping_recommend_api-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/target/shopping_recommend_api-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/service/Impl/RecommendServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/service/Impl/RecommendServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/uitl/CollaborativeFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/java/com/owner/shopping_recommend_service/uitl/CollaborativeFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/test/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/test/java/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/bootstrap.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/mapper/GoodsMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/mapper/UserGoodsScoreMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/service/Impl/RecommendServiceImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/task/MatrixUpdateTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/classes/com/owner/shopping_recommend_service/uitl/CollaborativeFilter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/maven-archiver/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/shopping_recommend_service-0.0.1-SNAPSHOT.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/shopping_recommend_service-0.0.1-SNAPSHOT.jar.original" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/target/test-classes/com/owner/shopping_recommend_service/ShoppingRecommendServiceApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_search_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_search_customer_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_customer_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_search_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_search_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_search_service/src/test/java/com/owner/shopping_search_service/ShoppingSearchServiceApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_service/src/test/java/com/owner/shopping_search_service/ShoppingSearchServiceApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_seckill_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_seckill_customer_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_customer_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_seckill_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_seckill_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_service/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_user_customer_api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_customer_api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_user_customer_api/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_customer_api/src/main/resources/bootstrap.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_user_service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_user_service/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_service/src/main/resources/bootstrap.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -38,6 +110,12 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Connisic&quot;
+  }
+}</component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -46,11 +124,21 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Connisic/shopping.git&quot;,
+    &quot;accountId&quot;: &quot;91fa125e-1d46-4df5-b86c-a21af88744e0&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/shopping_search_service/src/test/java/com/owner/shopping_search_service/ShoppingSearchServiceApplicationTests.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/shopping_search_service/src/main/resources/bootstrap.yml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/shopping_search_service/pom.xml" root0="FORCE_HIGHLIGHTING" />
   </component>
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -72,7 +160,9 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2im5kG5aQUNzpBijWsfpEiPm0e5" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
     <option name="showVisibilityIcons" value="true" />
@@ -87,11 +177,21 @@
     "JUnit.ShoppingSeckillServiceApplicationTests.contextLoads.executor": "Run",
     "JUnit.ShoppingUserCustomerApiApplicationTests.contextLoads.executor": "Run",
     "JUnit.ShoppingUserServiceApplicationTests.contextLoads.executor": "Run",
+    "Maven.shopping [clean].executor": "Run",
+    "Maven.shopping [com.spotify:dockerfile-maven-plugin:1.4.13:build].executor": "Run",
+    "Maven.shopping [compile].executor": "Run",
+    "Maven.shopping [install].executor": "Run",
+    "Maven.shopping [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor": "Run",
+    "Maven.shopping [org.apache.maven.plugins:maven-install-plugin:2.4:install].executor": "Run",
+    "Maven.shopping [package].executor": "Run",
+    "Maven.shopping [verify].executor": "Run",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.ShoppingAdminServiceApplication.executor": "Run",
     "Spring Boot.ShoppingCartCustomerApiApplication.executor": "Debug",
     "Spring Boot.ShoppingCartServiceApplication.executor": "Run",
@@ -116,17 +216,17 @@
     "git-widget-placeholder": "dev",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "B:/下载/tongyi-jetbrains-latest.zip",
+    "last_opened_file_path": "D:/JAVA/shopping/shopping_admin_service",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -141,17 +241,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\JAVA\shopping\shopping_recommend_service\src\main\java\com\owner\shopping_recommend_service" />
-      <recent name="D:\JAVA\shopping\shopping_recommend_api\src\main\resources" />
-      <recent name="D:\JAVA\shopping\shopping_order_service\src\main\resources" />
-      <recent name="D:\JAVA\shopping\shopping_order_customer_api\src\main\resources" />
-      <recent name="D:\JAVA\shopping\shopping_seckill_customer_api\src\main\resources" />
+      <recent name="D:\JAVA\shopping\shopping_admin_service" />
+      <recent name="D:\JAVA\shopping\shopping_cart_customer_api" />
+      <recent name="D:\JAVA\shopping\shopping_cart_service" />
+      <recent name="D:\JAVA\shopping\shopping_category_customer_api" />
+      <recent name="D:\JAVA\shopping\shopping_category_service" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources\META-INF" />
-      <recent name="D:\JAVA\shopping\shopping_cart_service\src\main\resources\META-INF" />
-      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources" />
-      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\resources\com\owner\shopping_goods_service" />
+      <recent name="D:\JAVA\shopping\shopping_goods_service\src\main\java\com\owner\shopping_goods_service\service\impl" />
+      <recent name="D:\JAVA\shopping\shopping_common\src\main\java\com\owner\shopping_common\service" />
+      <recent name="D:\JAVA\shopping\shopping_common\src\main\java\com\owner\shopping_common\result" />
+      <recent name="D:\JAVA\shopping\shopping_common\src\main\java\com\owner\shopping_common\util" />
+      <recent name="D:\JAVA\shopping\shopping_recommend_service\src\main\java\com\owner\shopping_recommend_service\service\Impl" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.owner.shopping_common" />
@@ -173,7 +274,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.ShoppingOrderServiceApplication">
+  <component name="RunManager" selected="Spring Boot.ShoppingCategoryServiceApplication">
     <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
@@ -383,7 +484,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.24807.4" />
+        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
       </set>
     </attachedChunks>
   </component>
@@ -534,6 +636,13 @@
       <workItem from="1743316990113" duration="9871000" />
       <workItem from="1743345961709" duration="5015000" />
       <workItem from="1743433270420" duration="5015000" />
+      <workItem from="1744274364490" duration="10739000" />
+      <workItem from="1744293234005" duration="1327000" />
+      <workItem from="1744457754087" duration="4306000" />
+      <workItem from="1744469523321" duration="767000" />
+      <workItem from="1744536825688" duration="3773000" />
+      <workItem from="1744542494811" duration="1192000" />
+      <workItem from="1744547585917" duration="8331000" />
     </task>
     <task id="LOCAL-00001" summary="最初版本，在ES服务添加了每天凌晨三点和数据库同步">
       <option name="closed" value="true" />
@@ -621,6 +730,23 @@
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
+    <option featureType="dependencySupport" implementationName="java:org.apache.dubbo:dubbo" />
+    <option featureType="dependencySupport" implementationName="java:jakarta.validation:jakarta.validation-api" />
+    <option featureType="dependencySupport" implementationName="java:io.projectreactor:reactor-core" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.cloud:spring-cloud-context" />
+    <option featureType="dependencySupport" implementationName="java:org.hibernate.validator:hibernate-validator" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-webmvc" />
+    <option featureType="dependencySupport" implementationName="java:org.projectlombok:lombok" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="java:io.reactivex.rxjava3:rxjava" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework:spring-messaging" />
+    <option featureType="dependencySupport" implementationName="java:org.springframework.boot:spring-boot" />
+  </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
       <map>
@@ -697,11 +823,6 @@
           <url>file://$PROJECT_DIR$/shopping_recommend_api/src/main/java/com/owner/shopping_recommend_api/controller/RecommendController.java</url>
           <line>24</line>
           <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/shopping_goods_service/src/main/java/com/owner/shopping_goods_service/service/impl/GoodsServiceImpl.java</url>
-          <line>129</line>
-          <option name="timeStamp" value="59" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/shopping_cart_customer_api/src/main/java/com/owner/shopping_cart_customer_api/controller/CartController.java</url>

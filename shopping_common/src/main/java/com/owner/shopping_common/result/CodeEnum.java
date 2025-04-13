@@ -54,7 +54,9 @@ public enum CodeEnum {
 
     DATA_VIOLATION_ERROR(618,"数据访问异常"),
 
-    UPDATE_MATRIX_ERROR(619,"更新相似度矩阵失败" );
+    UPDATE_MATRIX_ERROR(619,"更新相似度矩阵失败" ),
+
+    BATCH_QUERY_ERROR(620, "批量获取商品年龄数据失败");
     private final  Integer code;
 
     private final String message;
