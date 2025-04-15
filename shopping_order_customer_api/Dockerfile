@@ -5,6 +5,6 @@ WORKDIR /app
 
 COPY target/app.jar app.jar
 
-EXPOSE 9082
+EXPOSE 8006
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

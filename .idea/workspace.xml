@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="init">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="容器编排">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_cart_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.service.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_admin_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_admin_service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_category_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_common/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_file_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_file_service/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_goods_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_pay_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_pay_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_search_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_seckill_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_user_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_message_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_message_service/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shopping_order_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,75 +98,75 @@
     <option name="showLibraryContents" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ShoppingFileServiceApplication.executor": "Run",
-    "Application.ShoppingGoodsServiceApplication.executor": "Run",
-    "JUnit.ShoppingGoodsServiceApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ShoppingManagerApiApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ShoppingRecommendServiceApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ShoppingSeckillServiceApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ShoppingUserCustomerApiApplicationTests.contextLoads.executor": "Run",
-    "JUnit.ShoppingUserServiceApplicationTests.contextLoads.executor": "Run",
-    "Maven.shopping [clean].executor": "Run",
-    "Maven.shopping [com.spotify:dockerfile-maven-plugin:1.4.13:build].executor": "Run",
-    "Maven.shopping [compile].executor": "Run",
-    "Maven.shopping [install].executor": "Run",
-    "Maven.shopping [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor": "Run",
-    "Maven.shopping [org.apache.maven.plugins:maven-install-plugin:2.4:install].executor": "Run",
-    "Maven.shopping [package].executor": "Run",
-    "Maven.shopping [verify].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.ShoppingAdminServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingCartCustomerApiApplication.executor": "Debug",
-    "Spring Boot.ShoppingCartServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingCategoryCustomerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingCategoryServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingFileServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingGoodsServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingManagerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingMessageServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingOrderCustomerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingOrderServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingPayServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingRecommendServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingSearchCustomerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingSearchServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingSeckillCustomerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingSeckillServiceApplication.executor": "Run",
-    "Spring Boot.ShoppingUserCustomerApiApplication.executor": "Run",
-    "Spring Boot.ShoppingUserServiceApplication.executor": "Run",
-    "StatusDashboardGroupingRule": "true",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/JAVA/exam",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ShoppingFileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.ShoppingGoodsServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingGoodsServiceApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingManagerApiApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingRecommendServiceApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingSeckillServiceApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingUserCustomerApiApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ShoppingUserServiceApplicationTests.contextLoads.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [com.spotify:dockerfile-maven-plugin:1.4.13:build].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [org.apache.maven.plugins:maven-clean-plugin:2.5:clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [org.apache.maven.plugins:maven-install-plugin:2.4:install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shopping [verify].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Spring Boot.ShoppingAdminServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingCartCustomerApiApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;Spring Boot.ShoppingCartServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingCategoryCustomerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingCategoryServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingFileServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingGoodsServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingManagerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingMessageServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingOrderCustomerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingOrderServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingPayServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingRecommendServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingSearchCustomerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingSearchServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingSeckillCustomerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingSeckillServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingUserCustomerApiApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.ShoppingUserServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;StatusDashboardGroupingRule&quot;: &quot;true&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/JAVA/exam&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "ChangesTree.GroupingKeys": [
-      "directory",
-      "module"
+  &quot;keyToStringList&quot;: {
+    &quot;ChangesTree.GroupingKeys&quot;: [
+      &quot;directory&quot;,
+      &quot;module&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -577,6 +576,7 @@
       <workItem from="1744547585917" duration="10203000" />
       <workItem from="1744706335778" duration="29000" />
       <workItem from="1744735329418" duration="1358000" />
+      <workItem from="1744738367555" duration="827000" />
     </task>
     <task id="LOCAL-00001" summary="最初版本，在ES服务添加了每天凌晨三点和数据库同步">
       <option name="closed" value="true" />
@@ -666,7 +666,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744561885205</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="容器编排">
+      <option name="closed" value="true" />
+      <created>1744738391769</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1744738391769</updated>
+    </task>
+    <task id="LOCAL-00013" summary="容器编排">
+      <option name="closed" value="true" />
+      <created>1744738749880</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1744738749880</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -737,7 +753,8 @@
     <MESSAGE value="dev开发" />
     <MESSAGE value="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式" />
     <MESSAGE value="init" />
-    <option name="LAST_COMMIT_MESSAGE" value="init" />
+    <MESSAGE value="容器编排" />
+    <option name="LAST_COMMIT_MESSAGE" value="容器编排" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

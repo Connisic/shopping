@@ -43,7 +43,7 @@ services:
       - nacos
       - user-service
     ports:
-      - "9081:9081"
+      - "8003:8003"
     networks:
       - shopping-network
 
@@ -74,7 +74,7 @@ services:
       - nacos
       - order-service
     ports:
-      - "9082:9082"
+      - "8006:8006"
     networks:
       - shopping-network
 
@@ -104,7 +104,7 @@ services:
       - nacos
       - cart-service
     ports:
-      - "9083:9083"
+      - "8005:8005"
     networks:
       - shopping-network
 
@@ -150,7 +150,7 @@ services:
       - nacos
       - seckill-service
     ports:
-      - "9085:9085"
+      - "8007:8007"
     networks:
       - shopping-network
 
@@ -180,7 +180,7 @@ services:
       - nacos
       - search-service
     ports:
-      - "9086:9086"
+      - "8004:8004"
     networks:
       - shopping-network
 
@@ -210,7 +210,7 @@ services:
       - nacos
       - recommend-service
     ports:
-      - "9088:9088"
+      - "8008:8008"
     networks:
       - shopping-network
 
@@ -240,7 +240,7 @@ services:
       - nacos
       - category-service
     ports:
-      - "9087:9087"
+      - "8002:8002"
     networks:
       - shopping-network
 
@@ -257,7 +257,7 @@ services:
       - goods-service
       - category-service
     ports:
-      - "9090:9090"
+      - "8001:8001"
     networks:
       - shopping-network
 
@@ -388,7 +388,8 @@ services:
     image: delron/fastdfs-nginx
     container_name: fastdfs-nginx
     ports:
-      - "8889:80"
+      - "8888:8888"
+      - "81:81"
     volumes:
       - /data/fastdfs/nginx:/etc/nginx/conf.d
     depends_on:
@@ -403,5 +404,4 @@ networks:
 volumes:
   mysql-data:
   redis-data:
-  es-data:
-  minio-data: 
+  es-data: 

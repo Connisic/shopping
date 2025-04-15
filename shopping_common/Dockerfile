@@ -1,16 +1,9 @@
-# 设置JAVA版本
-FROM openjdk:17
-# 指定存储卷, 任何向/tmp写入的信息都不会记录到容器存储层
-VOLUME /tmp
-# 拷贝运行JAR包
-ARG JAR_FILE
-COPY ${JAR_FILE} app.jar
-# 设置JVM运行参数， 这里限定下内存大小，减少开销
-ENV JAVA_OPTS="\
--server \
--Xms256m \
--Xmx512m \
--XX:MetaspaceSize=256m \
--XX:MaxMetaspaceSize=512m"
-# 入口点， 执行JAVA运行命令
-ENTRYPOINT java ${JAVA_OPTS} -jar /app.jar
+FROM openjdk:17-jdk-slim
+
+WORKDIR /app
+
+# 由于这是通用库模块，通常不会直接运行，仅作为依赖被其他服务使用
+# 这里仅为了构建镜像，实际不会单独启动
+COPY target/app.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
