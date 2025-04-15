@@ -31,6 +31,22 @@ services:
     networks:
       - shopping-network
 
+  # 用户API
+  user-api:
+    build:
+      context: ./shopping_user_customer_api
+      dockerfile: Dockerfile
+    container_name: user-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - user-service
+    ports:
+      - "9081:9081"
+    networks:
+      - shopping-network
+
   # 订单服务
   order-service:
     build:
@@ -46,6 +62,22 @@ services:
     networks:
       - shopping-network
 
+  # 订单API
+  order-api:
+    build:
+      context: ./shopping_order_customer_api
+      dockerfile: Dockerfile
+    container_name: order-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - order-service
+    ports:
+      - "9082:9082"
+    networks:
+      - shopping-network
+
   # 购物车服务
   cart-service:
     build:
@@ -57,6 +89,22 @@ services:
     depends_on:
       - nacos
       - redis
+    networks:
+      - shopping-network
+
+  # 购物车API
+  cart-api:
+    build:
+      context: ./shopping_cart_customer_api
+      dockerfile: Dockerfile
+    container_name: cart-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - cart-service
+    ports:
+      - "9083:9083"
     networks:
       - shopping-network
 
@@ -90,6 +138,22 @@ services:
     networks:
       - shopping-network
 
+  # 秒杀API
+  seckill-api:
+    build:
+      context: ./shopping_seckill_customer_api
+      dockerfile: Dockerfile
+    container_name: seckill-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - seckill-service
+    ports:
+      - "9085:9085"
+    networks:
+      - shopping-network
+
   # 搜索服务
   search-service:
     build:
@@ -104,6 +168,22 @@ services:
     networks:
       - shopping-network
 
+  # 搜索API
+  search-api:
+    build:
+      context: ./shopping_search_customer_api
+      dockerfile: Dockerfile
+    container_name: search-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - search-service
+    ports:
+      - "9086:9086"
+    networks:
+      - shopping-network
+
   # 推荐服务
   recommend-service:
     build:
@@ -115,6 +195,69 @@ services:
     depends_on:
       - nacos
       - redis
+    networks:
+      - shopping-network
+
+  # 推荐API
+  recommend-api:
+    build:
+      context: ./shopping_recommend_api
+      dockerfile: Dockerfile
+    container_name: recommend-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - recommend-service
+    ports:
+      - "9088:9088"
+    networks:
+      - shopping-network
+
+  # 分类服务
+  category-service:
+    build:
+      context: ./shopping_category_service
+      dockerfile: Dockerfile
+    container_name: category-service
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - mysql
+    networks:
+      - shopping-network
+
+  # 分类API
+  category-api:
+    build:
+      context: ./shopping_category_customer_api
+      dockerfile: Dockerfile
+    container_name: category-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - category-service
+    ports:
+      - "9087:9087"
+    networks:
+      - shopping-network
+
+  # 管理员API
+  manager-api:
+    build:
+      context: ./shopping_manager_api
+      dockerfile: Dockerfile
+    container_name: manager-api
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
+    depends_on:
+      - nacos
+      - goods-service
+      - category-service
+    ports:
+      - "9090:9090"
     networks:
       - shopping-network
 
