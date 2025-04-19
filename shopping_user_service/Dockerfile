@@ -1,4 +1,4 @@
-# 多阶段构建 - 第一阶段：构建阶段
+﻿# 多阶段构建 - 第一阶段：构建阶段
 FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 
 # 设置工作目录
@@ -52,8 +52,11 @@ COPY --from=builder /build/shopping_user_service/target/*.jar /app/app.jar
 # 切换到非root用户
 USER appuser
 
+# 暴露服务端口
+EXPOSE 9002
+
 # 健康检查
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:8080/actuator/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:9002/actuator/health || exit 1
 
 # 设置入口点
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"] 

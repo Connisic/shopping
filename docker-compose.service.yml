@@ -8,6 +8,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-file-service
     restart: always
+    ports:
+      - "9003:9003"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -22,6 +24,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-user-service
     restart: always
+    ports:
+      - "9002:9002"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -37,7 +41,7 @@ services:
     container_name: shopping-user-api
     restart: always
     ports:
-      - "8081:8080"
+      - "8003:8003"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -52,6 +56,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-goods-service
     restart: always
+    ports:
+      - "9001:9001"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -66,6 +72,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-category-service
     restart: always
+    ports:
+      - "9004:9004"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -81,7 +89,7 @@ services:
     container_name: shopping-category-api
     restart: always
     ports:
-      - "8082:8080"
+      - "8002:8002"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -96,6 +104,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-search-service
     restart: always
+    ports:
+      - "9008:9008"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -111,7 +121,7 @@ services:
     container_name: shopping-search-api
     restart: always
     ports:
-      - "8083:8080"
+      - "8004:8004"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -126,6 +136,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-cart-service
     restart: always
+    ports:
+      - "9009:9009"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -141,7 +153,7 @@ services:
     container_name: shopping-cart-api
     restart: always
     ports:
-      - "8084:8080"
+      - "8005:8005"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -156,6 +168,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-order-service
     restart: always
+    ports:
+      - "9010:9010"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -171,7 +185,7 @@ services:
     container_name: shopping-order-api
     restart: always
     ports:
-      - "8085:8080"
+      - "8006:8006"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -186,6 +200,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-pay-service
     restart: always
+    ports:
+      - "9011:9011"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -200,6 +216,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-seckill-service
     restart: always
+    ports:
+      - "9005:9005"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -215,7 +233,7 @@ services:
     container_name: shopping-seckill-api
     restart: always
     ports:
-      - "8086:8080"
+      - "8007:8007"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -230,6 +248,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-message-service
     restart: always
+    ports:
+      - "9007:9007"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -244,6 +264,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-recommend-service
     restart: always
+    ports:
+      - "9012:9012"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -259,7 +281,7 @@ services:
     container_name: shopping-recommend-api
     restart: always
     ports:
-      - "8087:8080"
+      - "8008:8008"
     environment:
       - JAVA_OPTS=-server -Xms96m -Xmx192m
     deploy:
@@ -274,6 +296,8 @@ services:
       dockerfile: Dockerfile
     container_name: shopping-admin-service
     restart: always
+    ports:
+      - "9002:9002"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -289,10 +313,11 @@ services:
     container_name: shopping-manager-api
     restart: always
     ports:
-      - "8080:8080"
+      - "8001:8001"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
       resources:
         limits:
           memory: 300M
+
