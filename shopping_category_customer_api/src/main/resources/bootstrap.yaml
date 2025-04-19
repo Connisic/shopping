@@ -4,8 +4,7 @@ spring:
   cloud:
     nacos:
       config:
-        username: nacos
-        password: nacos
+
         server-addr: 101.37.84.232:8848
         namespace: 59d463e9-731f-4545-9697-8de823cffeac
         file-extension: yaml

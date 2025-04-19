@@ -1,407 +1,298 @@
 version: '3.8'
 
 services:
-  # 商品服务
-  goods-service:
+  # 文件服务
+  file-service:
     build:
-      context: ./shopping_goods_service
+      context: ./shopping_file_service
       dockerfile: Dockerfile
-    container_name: goods-service
+    container_name: shopping-file-service
+    restart: always
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-      - redis
-    networks:
-      - shopping-network
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
 
   # 用户服务
   user-service:
     build:
       context: ./shopping_user_service
       dockerfile: Dockerfile
-    container_name: user-service
+    container_name: shopping-user-service
+    restart: always
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-      - redis
-    networks:
-      - shopping-network
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
 
   # 用户API
   user-api:
     build:
       context: ./shopping_user_customer_api
       dockerfile: Dockerfile
-    container_name: user-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - user-service
+    container_name: shopping-user-api
+    restart: always
     ports:
-      - "8003:8003"
-    networks:
-      - shopping-network
-
-  # 订单服务
-  order-service:
-    build:
-      context: ./shopping_order_service
-      dockerfile: Dockerfile
-    container_name: order-service
+      - "8081:8080"
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-      - redis
-    networks:
-      - shopping-network
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
 
-  # 订单API
-  order-api:
+  # 商品服务
+  goods-service:
     build:
-      context: ./shopping_order_customer_api
+      context: ./shopping_goods_service
       dockerfile: Dockerfile
-    container_name: order-api
+    container_name: shopping-goods-service
+    restart: always
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - order-service
-    ports:
-      - "8006:8006"
-    networks:
-      - shopping-network
-
-  # 购物车服务
-  cart-service:
-    build:
-      context: ./shopping_cart_service
-      dockerfile: Dockerfile
-    container_name: cart-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - redis
-    networks:
-      - shopping-network
-
-  # 购物车API
-  cart-api:
-    build:
-      context: ./shopping_cart_customer_api
-      dockerfile: Dockerfile
-    container_name: cart-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - cart-service
-    ports:
-      - "8005:8005"
-    networks:
-      - shopping-network
-
-  # 支付服务
-  pay-service:
-    build:
-      context: ./shopping_pay_service
-      dockerfile: Dockerfile
-    container_name: pay-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-      - redis
-    networks:
-      - shopping-network
-
-  # 秒杀服务
-  seckill-service:
-    build:
-      context: ./shopping_seckill_service
-      dockerfile: Dockerfile
-    container_name: seckill-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-      - redis
-    networks:
-      - shopping-network
-
-  # 秒杀API
-  seckill-api:
-    build:
-      context: ./shopping_seckill_customer_api
-      dockerfile: Dockerfile
-    container_name: seckill-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - seckill-service
-    ports:
-      - "8007:8007"
-    networks:
-      - shopping-network
-
-  # 搜索服务
-  search-service:
-    build:
-      context: ./shopping_search_service
-      dockerfile: Dockerfile
-    container_name: search-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - elasticsearch
-    networks:
-      - shopping-network
-
-  # 搜索API
-  search-api:
-    build:
-      context: ./shopping_search_customer_api
-      dockerfile: Dockerfile
-    container_name: search-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - search-service
-    ports:
-      - "8004:8004"
-    networks:
-      - shopping-network
-
-  # 推荐服务
-  recommend-service:
-    build:
-      context: ./shopping_recommend_service
-      dockerfile: Dockerfile
-    container_name: recommend-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - redis
-    networks:
-      - shopping-network
-
-  # 推荐API
-  recommend-api:
-    build:
-      context: ./shopping_recommend_api
-      dockerfile: Dockerfile
-    container_name: recommend-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - recommend-service
-    ports:
-      - "8008:8008"
-    networks:
-      - shopping-network
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
 
   # 分类服务
   category-service:
     build:
       context: ./shopping_category_service
       dockerfile: Dockerfile
-    container_name: category-service
+    container_name: shopping-category-service
+    restart: always
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - mysql
-    networks:
-      - shopping-network
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
 
   # 分类API
   category-api:
     build:
       context: ./shopping_category_customer_api
       dockerfile: Dockerfile
-    container_name: category-api
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - category-service
+    container_name: shopping-category-api
+    restart: always
     ports:
-      - "8002:8002"
-    networks:
-      - shopping-network
+      - "8082:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 搜索服务
+  search-service:
+    build:
+      context: ./shopping_search_service
+      dockerfile: Dockerfile
+    container_name: shopping-search-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 搜索API
+  search-api:
+    build:
+      context: ./shopping_search_customer_api
+      dockerfile: Dockerfile
+    container_name: shopping-search-api
+    restart: always
+    ports:
+      - "8083:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 购物车服务
+  cart-service:
+    build:
+      context: ./shopping_cart_service
+      dockerfile: Dockerfile
+    container_name: shopping-cart-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 购物车API
+  cart-api:
+    build:
+      context: ./shopping_cart_customer_api
+      dockerfile: Dockerfile
+    container_name: shopping-cart-api
+    restart: always
+    ports:
+      - "8084:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 订单服务
+  order-service:
+    build:
+      context: ./shopping_order_service
+      dockerfile: Dockerfile
+    container_name: shopping-order-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 订单API
+  order-api:
+    build:
+      context: ./shopping_order_customer_api
+      dockerfile: Dockerfile
+    container_name: shopping-order-api
+    restart: always
+    ports:
+      - "8085:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 支付服务
+  pay-service:
+    build:
+      context: ./shopping_pay_service
+      dockerfile: Dockerfile
+    container_name: shopping-pay-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 秒杀服务
+  seckill-service:
+    build:
+      context: ./shopping_seckill_service
+      dockerfile: Dockerfile
+    container_name: shopping-seckill-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 秒杀API
+  seckill-api:
+    build:
+      context: ./shopping_seckill_customer_api
+      dockerfile: Dockerfile
+    container_name: shopping-seckill-api
+    restart: always
+    ports:
+      - "8086:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 消息服务
+  message-service:
+    build:
+      context: ./shopping_message_service
+      dockerfile: Dockerfile
+    container_name: shopping-message-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 推荐服务
+  recommend-service:
+    build:
+      context: ./shopping_recommend_service
+      dockerfile: Dockerfile
+    container_name: shopping-recommend-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 推荐API
+  recommend-api:
+    build:
+      context: ./shopping_recommend_api
+      dockerfile: Dockerfile
+    container_name: shopping-recommend-api
+    restart: always
+    ports:
+      - "8087:8080"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 管理员服务
+  admin-service:
+    build:
+      context: ./shopping_admin_service
+      dockerfile: Dockerfile
+    container_name: shopping-admin-service
+    restart: always
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
 
   # 管理员API
   manager-api:
     build:
       context: ./shopping_manager_api
       dockerfile: Dockerfile
-    container_name: manager-api
+    container_name: shopping-manager-api
+    restart: always
+    ports:
+      - "8080:8080"
     environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - goods-service
-      - category-service
-    ports:
-      - "8001:8001"
-    networks:
-      - shopping-network
-
-  # 文件服务
-  file-service:
-    build:
-      context: ./shopping_file_service
-      dockerfile: Dockerfile
-    container_name: file-service
-    environment:
-      - JAVA_OPTS=-Xms256m -Xmx512m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m
-    depends_on:
-      - nacos
-      - fastdfs-tracker
-      - fastdfs-storage
-    networks:
-      - shopping-network
-
-  # 基础设施服务
-  nacos:
-    image: nacos/nacos-server:v2.2.3
-    container_name: nacos
-    environment:
-      - MODE=standalone
-      - JVM_XMS=256m
-      - JVM_XMX=256m
-    ports:
-      - "8848:8848"
-    volumes:
-      - /data/nacos/logs:/home/nacos/logs
-      - /data/nacos/conf:/home/nacos/conf
-    networks:
-      - shopping-network
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=shopping
-    ports:
-      - "3306:3306"
-    volumes:
-      - /data/mysql/data:/var/lib/mysql
-      - /data/mysql/conf:/etc/mysql/conf.d
-      - /data/mysql/logs:/var/log/mysql
-    networks:
-      - shopping-network
-
-  redis:
-    image: redis:6.2
-    container_name: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - /data/redis/data:/data
-      - /data/redis/conf:/usr/local/etc/redis
-    command: redis-server /usr/local/etc/redis/redis.conf
-    networks:
-      - shopping-network
-
-  elasticsearch:
-    image: elasticsearch:7.17.9
-    container_name: elasticsearch
-    environment:
-      - discovery.type=single-node
-      - "ES_JAVA_OPTS=-Xms256m -Xmx512m"
-      - "bootstrap.memory_lock=true"
-      - "xpack.security.enabled=false"
-    ports:
-      - "9200:9200"
-    volumes:
-      - /data/elasticsearch/data:/usr/share/elasticsearch/data
-      - /data/elasticsearch/plugins:/usr/share/elasticsearch/plugins
-      - /data/elasticsearch/logs:/usr/share/elasticsearch/logs
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
-    networks:
-      - shopping-network
-    entrypoint: >
-      bash -c "
-        if [ ! -d /usr/share/elasticsearch/plugins/analysis-ik ]; then
-          echo 'Installing IK plugin...'
-          cd /usr/share/elasticsearch/plugins
-          unzip elasticsearch-analysis-ik-8.10.4.zip
-        fi
-        if [ ! -d /usr/share/elasticsearch/plugins/analysis-pinyin ]; then
-          echo 'Installing Pinyin plugin...'
-          cd /usr/share/elasticsearch/plugins
-          unzip elasticsearch-analysis-pinyin-8.10.4.zip
-        fi
-        /usr/local/bin/docker-entrypoint.sh
-      "
-
-  # FastDFS Tracker
-  fastdfs-tracker:
-    image: delron/fastdfs
-    container_name: fastdfs-tracker
-    command: tracker
-    ports:
-      - "22122:22122"
-    volumes:
-      - /data/fastdfs/tracker:/var/local/fdfs
-    networks:
-      - shopping-network
-
-  # FastDFS Storage
-  fastdfs-storage:
-    image: delron/fastdfs
-    container_name: fastdfs-storage
-    command: storage
-    depends_on:
-      - fastdfs-tracker
-    ports:
-      - "8888:8888"
-      - "23000:23000"
-    volumes:
-      - /data/fastdfs/storage:/var/local/fdfs
-    environment:
-      - TRACKER_SERVER=fastdfs-tracker:22122
-    networks:
-      - shopping-network
-
-  # Nginx for FastDFS
-  fastdfs-nginx:
-    image: delron/fastdfs-nginx
-    container_name: fastdfs-nginx
-    ports:
-      - "8888:8888"
-      - "81:81"
-    volumes:
-      - /data/fastdfs/nginx:/etc/nginx/conf.d
-    depends_on:
-      - fastdfs-storage
-    networks:
-      - shopping-network
-
-networks:
-  shopping-network:
-    driver: bridge
-
-volumes:
-  mysql-data:
-  redis-data:
-  es-data: 
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
