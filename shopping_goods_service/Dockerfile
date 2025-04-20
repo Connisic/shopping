@@ -1,52 +1,75 @@
-﻿# 多阶段构建 - 第一阶段：构建阶段
+﻿# Stage 1: Build stage
 FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 
-# 设置工作目录
+# Set working directory
 WORKDIR /build
 
-# 首先复制全部的源代码到构建目录
-COPY . /build/
+# Copy pom files first
+COPY ./pom.xml /build/
+COPY ./shopping_common/pom.xml /build/shopping_common/
+COPY ./shopping_goods_service/pom.xml /build/shopping_goods_service/
 
-# 不使用go-offline，直接使用针对单个模块的构建命令
-# 这样避免Maven尝试解析所有模块
+# Configure Maven settings with Aliyun mirror
+RUN mkdir -p /root/.m2 && \
+    echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 https://maven.apache.org/xsd/settings-1.0.0.xsd"> \
+    <mirrors> \
+        <mirror> \
+            <id>aliyun</id> \
+            <mirrorOf>central</mirrorOf> \
+            <name>Aliyun Maven Repository</name> \
+            <url>https://maven.aliyun.com/repository/public</url> \
+        </mirror> \
+    </mirrors> \
+</settings>' > /root/.m2/settings.xml
+
+# Copy necessary source code
+COPY ./shopping_common/src /build/shopping_common/src/
+COPY ./shopping_goods_service/src /build/shopping_goods_service/src/
+
+# Build application, skip tests
 RUN mvn clean package -DskipTests -pl shopping_goods_service -am
 
-# 第二阶段：运行阶段 - 使用更小的基础镜像
+# Stage 2: Extract JAR layers
+FROM alpine:3.16 AS extractor
+WORKDIR /extract
+COPY --from=builder /build/shopping_goods_service/target/*.jar /extract/app.jar
+RUN mkdir -p /extract/dependencies /extract/spring-boot-loader /extract/snapshot-dependencies /extract/application
+RUN java -Djarmode=layertools -jar app.jar extract --destination /extract
+
+# Stage 3: Final runtime image
 FROM eclipse-temurin:17-jre-alpine
 
-# 设置工作目录
+# Set working directory
 WORKDIR /app
 
-# 添加标签
+# Add labels
 LABEL maintainer="Shopping Team"
 LABEL description="Goods Service for Shopping Platform"
 
-# 创建非root用户
+# Create non-root user
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-# 设置JVM运行参数，限制内存使用
-ENV JAVA_OPTS="-server -Xms128m -Xmx256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m"
+# Set JVM runtime parameters
+ENV JAVA_OPTS="-server -Xms128m -Xmx256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m -XX:+UseContainerSupport -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom"
 
-# 设置时区
+# Set timezone
 ENV TZ=Asia/Shanghai
 
-# 安装基本工具（可选，如需更小镜像可以移除）
-RUN apk add --no-cache tzdata curl && \
-    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
-    echo $TZ > /etc/timezone && \
-    apk del tzdata
+# Copy application in layers (from less frequently changed to most frequently changed)
+COPY --from=extractor /extract/dependencies/ ./
+COPY --from=extractor /extract/spring-boot-loader/ ./
+COPY --from=extractor /extract/snapshot-dependencies/ ./
+COPY --from=extractor /extract/application/ ./
 
-# 从构建阶段复制JAR包
-COPY --from=builder /build/shopping_goods_service/target/*.jar /app/app.jar
-
-# 切换到非root用户
+# Switch to non-root user
 USER appuser
 
-# 暴露服务端口
+# Expose service port
 EXPOSE 9001
 
-# 健康检查
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:9001/actuator/health || exit 1
+# Healthcheck
+HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
+  CMD wget -q --spider http://localhost:9001/actuator/health || exit 1
 
-# 设置入口点
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]
+# Set entrypoint with optimized parameters
+ENTRYPOINT ["sh", "-c", "java \ org.springframework.boot.loader.JarLauncher"]
