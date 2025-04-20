@@ -257,37 +257,37 @@ services:
         limits:
           memory: 250M
 
-  # 推荐服务
-  recommend-service:
-    build:
-      context: .
-      dockerfile: ./shopping_recommend_service/Dockerfile
-    container_name: shopping-recommend-service
-    restart: always
-    ports:
-      - "9012:9012"
-    environment:
-      - JAVA_OPTS=-server -Xms96m -Xmx192m
-    deploy:
-      resources:
-        limits:
-          memory: 250M
-
-  # 推荐API
-  recommend-api:
-    build:
-      context: .
-      dockerfile: ./shopping_recommend_api/Dockerfile
-    container_name: shopping-recommend-api
-    restart: always
-    ports:
-      - "8008:8008"
-    environment:
-      - JAVA_OPTS=-server -Xms96m -Xmx192m
-    deploy:
-      resources:
-        limits:
-          memory: 250M
+#  # 推荐服务
+#  recommend-service:
+#    build:
+#      context: .
+#      dockerfile: ./shopping_recommend_service/Dockerfile
+#    container_name: shopping-recommend-service
+#    restart: always
+#    ports:
+#      - "9012:9012"
+#    environment:
+#      - JAVA_OPTS=-server -Xms96m -Xmx192m
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 250M
+#
+#  # 推荐API
+#  recommend-api:
+#    build:
+#      context: .
+#      dockerfile: ./shopping_recommend_api/Dockerfile
+#    container_name: shopping-recommend-api
+#    restart: always
+#    ports:
+#      - "8008:8008"
+#    environment:
+#      - JAVA_OPTS=-server -Xms96m -Xmx192m
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 250M
 
   # 管理员服务
   admin-service:
