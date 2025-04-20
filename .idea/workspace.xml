@@ -4,31 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="容器编排和註冊中心">
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+    <list default="true" id="d02059ec-0729-4349-b976-08e8a79f07a7" name="Default Changelist" comment="容器编排">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.service.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.service.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_admin_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_admin_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_cart_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_cart_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_cart_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_category_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_category_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_category_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_common/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_common/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shopping_file_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_file_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_goods_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_goods_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_manager_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_manager_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_message_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_message_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_order_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_order_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_order_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_pay_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_pay_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_recommend_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_recommend_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_recommend_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_search_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_search_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_search_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_seckill_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_seckill_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_seckill_service/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_user_customer_api/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_customer_api/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shopping_user_service/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/shopping_user_service/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,7 +376,6 @@
     </configuration>
     <list>
       <item itemvalue="JUnit.ShoppingRecommendServiceApplicationTests.contextLoads" />
-      <item itemvalue="Spring Boot.ShoppingRecommendServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingAdminServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingCartCustomerApiApplication" />
       <item itemvalue="Spring Boot.ShoppingCartServiceApplication" />
@@ -409,15 +386,16 @@
       <item itemvalue="Spring Boot.ShoppingManagerApiApplication" />
       <item itemvalue="Spring Boot.ShoppingMessageServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingOrderCustomerApiApplication" />
+      <item itemvalue="Spring Boot.ShoppingOrderServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingPayServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingRecommendApiApplication " />
+      <item itemvalue="Spring Boot.ShoppingRecommendServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingSearchCustomerApiApplication" />
       <item itemvalue="Spring Boot.ShoppingSearchServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingSeckillCustomerApiApplication" />
       <item itemvalue="Spring Boot.ShoppingSeckillServiceApplication" />
       <item itemvalue="Spring Boot.ShoppingUserCustomerApiApplication" />
       <item itemvalue="Spring Boot.ShoppingUserServiceApplication" />
-      <item itemvalue="Spring Boot.ShoppingOrderServiceApplication" />
     </list>
     <recent_temporary>
       <list>
@@ -596,7 +574,7 @@
       <workItem from="1744824494372" duration="22000" />
       <workItem from="1744898390625" duration="3545000" />
       <workItem from="1745030916133" duration="1781000" />
-      <workItem from="1745066559513" duration="6256000" />
+      <workItem from="1745066559513" duration="7629000" />
     </task>
     <task id="LOCAL-00001" summary="最初版本，在ES服务添加了每天凌晨三点和数据库同步">
       <option name="closed" value="true" />
@@ -718,7 +696,23 @@
       <option name="project" value="LOCAL" />
       <updated>1745073875775</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="容器编排">
+      <option name="closed" value="true" />
+      <created>1745075952441</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1745075952441</updated>
+    </task>
+    <task id="LOCAL-00017" summary="容器编排">
+      <option name="closed" value="true" />
+      <created>1745076000604</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1745076000604</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -789,9 +783,9 @@
     <MESSAGE value="dev开发" />
     <MESSAGE value="feat(order): 增加订单缓存功能并重构订单服务- 在 OrderServiceImpl 中添加 Redis缓存支持，实现订单数据的缓存和查询优化&#10;-重构 findById 和 findUserOrders 方法，使用 MyBatis-Plus 和 Lambda 表达式" />
     <MESSAGE value="init" />
-    <MESSAGE value="容器编排" />
     <MESSAGE value="容器编排和註冊中心" />
-    <option name="LAST_COMMIT_MESSAGE" value="容器编排和註冊中心" />
+    <MESSAGE value="容器编排" />
+    <option name="LAST_COMMIT_MESSAGE" value="容器编排" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

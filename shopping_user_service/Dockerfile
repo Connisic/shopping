@@ -53,10 +53,10 @@ COPY --from=builder /build/shopping_user_service/target/*.jar /app/app.jar
 USER appuser
 
 # 暴露服务端口
-EXPOSE 9002
+EXPOSE 9006
 
 # 健康检查
-HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:9002/actuator/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:9006/actuator/health || exit 1
 
 # 设置入口点
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"] 

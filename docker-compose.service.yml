@@ -4,8 +4,8 @@ services:
   # 文件服务
   file-service:
     build:
-      context: ./shopping_file_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_file_service/Dockerfile
     container_name: shopping-file-service
     restart: always
     ports:
@@ -20,12 +20,12 @@ services:
   # 用户服务
   user-service:
     build:
-      context: ./shopping_user_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_user_service/Dockerfile
     container_name: shopping-user-service
     restart: always
     ports:
-      - "9002:9002"
+      - "9006:9006"
     environment:
       - JAVA_OPTS=-server -Xms128m -Xmx256m
     deploy:
@@ -36,8 +36,8 @@ services:
   # 用户API
   user-api:
     build:
-      context: ./shopping_user_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_user_customer_api/Dockerfile
     container_name: shopping-user-api
     restart: always
     ports:
@@ -52,8 +52,8 @@ services:
   # 商品服务
   goods-service:
     build:
-      context: ./shopping_goods_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_goods_service/Dockerfile
     container_name: shopping-goods-service
     restart: always
     ports:
@@ -68,8 +68,8 @@ services:
   # 分类服务
   category-service:
     build:
-      context: ./shopping_category_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_category_service/Dockerfile
     container_name: shopping-category-service
     restart: always
     ports:
@@ -84,8 +84,8 @@ services:
   # 分类API
   category-api:
     build:
-      context: ./shopping_category_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_category_customer_api/Dockerfile
     container_name: shopping-category-api
     restart: always
     ports:
@@ -100,8 +100,8 @@ services:
   # 搜索服务
   search-service:
     build:
-      context: ./shopping_search_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_search_service/Dockerfile
     container_name: shopping-search-service
     restart: always
     ports:
@@ -116,8 +116,8 @@ services:
   # 搜索API
   search-api:
     build:
-      context: ./shopping_search_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_search_customer_api/Dockerfile
     container_name: shopping-search-api
     restart: always
     ports:
@@ -132,8 +132,8 @@ services:
   # 购物车服务
   cart-service:
     build:
-      context: ./shopping_cart_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_cart_service/Dockerfile
     container_name: shopping-cart-service
     restart: always
     ports:
@@ -148,8 +148,8 @@ services:
   # 购物车API
   cart-api:
     build:
-      context: ./shopping_cart_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_cart_customer_api/Dockerfile
     container_name: shopping-cart-api
     restart: always
     ports:
@@ -164,8 +164,8 @@ services:
   # 订单服务
   order-service:
     build:
-      context: ./shopping_order_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_order_service/Dockerfile
     container_name: shopping-order-service
     restart: always
     ports:
@@ -180,8 +180,8 @@ services:
   # 订单API
   order-api:
     build:
-      context: ./shopping_order_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_order_customer_api/Dockerfile
     container_name: shopping-order-api
     restart: always
     ports:
@@ -196,8 +196,8 @@ services:
   # 支付服务
   pay-service:
     build:
-      context: ./shopping_pay_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_pay_service/Dockerfile
     container_name: shopping-pay-service
     restart: always
     ports:
@@ -212,8 +212,8 @@ services:
   # 秒杀服务
   seckill-service:
     build:
-      context: ./shopping_seckill_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_seckill_service/Dockerfile
     container_name: shopping-seckill-service
     restart: always
     ports:
@@ -228,8 +228,8 @@ services:
   # 秒杀API
   seckill-api:
     build:
-      context: ./shopping_seckill_customer_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_seckill_customer_api/Dockerfile
     container_name: shopping-seckill-api
     restart: always
     ports:
@@ -244,8 +244,8 @@ services:
   # 消息服务
   message-service:
     build:
-      context: ./shopping_message_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_message_service/Dockerfile
     container_name: shopping-message-service
     restart: always
     ports:
@@ -260,8 +260,8 @@ services:
   # 推荐服务
   recommend-service:
     build:
-      context: ./shopping_recommend_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_recommend_service/Dockerfile
     container_name: shopping-recommend-service
     restart: always
     ports:
@@ -276,8 +276,8 @@ services:
   # 推荐API
   recommend-api:
     build:
-      context: ./shopping_recommend_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_recommend_api/Dockerfile
     container_name: shopping-recommend-api
     restart: always
     ports:
@@ -292,8 +292,8 @@ services:
   # 管理员服务
   admin-service:
     build:
-      context: ./shopping_admin_service
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_admin_service/Dockerfile
     container_name: shopping-admin-service
     restart: always
     ports:
@@ -305,11 +305,11 @@ services:
         limits:
           memory: 300M
 
-  # 管理员API
+  # 管理后台API
   manager-api:
     build:
-      context: ./shopping_manager_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: ./shopping_manager_api/Dockerfile
     container_name: shopping-manager-api
     restart: always
     ports:
