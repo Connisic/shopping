@@ -4,21 +4,11 @@ FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 # 设置工作目录
 WORKDIR /build
 
-# 首先复制pom文件进行依赖缓存
-COPY ./pom.xml /build/
-COPY ./shopping_common/pom.xml /build/shopping_common/
-COPY ./shopping_goods_service/pom.xml /build/shopping_goods_service/
+# 首先复制全部的源代码到构建目录
+COPY . /build/
 
-# 尝试解析并下载依赖（如果pom文件没有变化，会使用缓存）
-RUN mvn dependency:go-offline -B
-
-# 复制通用模块源代码
-COPY ./shopping_common/src /build/shopping_common/src/
-
-# 复制服务源代码
-COPY ./shopping_goods_service/src /build/shopping_goods_service/src/
-
-# 构建应用，跳过测试
+# 不使用go-offline，直接使用针对单个模块的构建命令
+# 这样避免Maven尝试解析所有模块
 RUN mvn clean package -DskipTests -pl shopping_goods_service -am
 
 # 第二阶段：运行阶段 - 使用更小的基础镜像
@@ -59,4 +49,4 @@ EXPOSE 9001
 HEALTHCHECK --interval=30s --timeout=3s CMD curl -f http://localhost:9001/actuator/health || exit 1
 
 # 设置入口点
-ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"] 
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar app.jar"]

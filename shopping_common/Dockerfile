@@ -1,12 +1,13 @@
-# 多阶段构建 - 第一阶段：构建阶段
+# 澶氶樁娈垫瀯寤?- 绗竴闃舵锛氭瀯寤洪樁娈?
 FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 
-# 设置工作目录
+# 璁剧疆宸ヤ綔鐩綍
 WORKDIR /build
 
-# 复制pom文件进行依赖缓存
-COPY ./pom.xml /build/
-COPY ./shopping_common/pom.xml /build/shopping_common/
+# 棣栧厛澶嶅埗鍏ㄩ儴鐨勬簮浠ｇ爜鍒版瀯寤虹洰褰?
+COPY . /build/
+
+RUN mvn clean package -DskipTests -pl shopping_common -am
 
 # 尝试解析并下载依赖
 RUN mvn dependency:go-offline -B
