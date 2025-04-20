@@ -2,12 +2,10 @@
 FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 
 # Set working directory
-WORKDIR /build
+WORKDIR /app
 
-# Copy pom files first
-COPY ./pom.xml /build/
-COPY ./shopping_common/pom.xml /build/shopping_common/
-COPY ./shopping_admin_service/pom.xml /build/shopping_admin_service/
+# Copy the entire project first to ensure all modules are available
+COPY . .
 
 # Configure Maven settings with Aliyun mirror
 RUN mkdir -p /root/.m2 && \
@@ -22,17 +20,13 @@ RUN mkdir -p /root/.m2 && \
     </mirrors> \
 </settings>' > /root/.m2/settings.xml
 
-# Copy necessary source code
-COPY ./shopping_common/src /build/shopping_common/src/
-COPY ./shopping_admin_service/src /build/shopping_admin_service/src/
-
 # Build application, skip tests
 RUN mvn clean package -DskipTests -pl shopping_admin_service -am
 
 # Stage 2: Extract JAR layers
 FROM alpine:3.16 AS extractor
 WORKDIR /extract
-COPY --from=builder /build/shopping_admin_service/target/*.jar /extract/app.jar
+COPY --from=builder /app/shopping_admin_service/target/*.jar /extract/app.jar
 RUN mkdir -p /extract/dependencies /extract/spring-boot-loader /extract/snapshot-dependencies /extract/application
 RUN java -Djarmode=layertools -jar app.jar extract --destination /extract
 
