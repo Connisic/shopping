@@ -21,7 +21,7 @@ RUN mkdir -p /root/.m2 && \
 </settings>' > /root/.m2/settings.xml
 
 # Build application, skip tests
-RUN mvn clean package -DskipTests -pl shopping_admin_service -am
+RUN mvn clean install -DskipTests
 
 # Stage 2: Extract JAR layers
 FROM alpine:3.16 AS extractor
@@ -46,14 +46,20 @@ RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 # Set JVM runtime parameters
 ENV JAVA_OPTS="-server -Xms128m -Xmx256m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=256m -XX:+UseContainerSupport -XX:+UseG1GC -Djava.security.egd=file:/dev/./urandom"
 
-# Set timezone
-ENV TZ=Asia/Shanghai
+# Set timezone and install required tools
+RUN apk add --no-cache tzdata curl && \
+    cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone && \
+    apk del tzdata
 
 # Copy application in layers (from less frequently changed to most frequently changed)
 COPY --from=extractor /extract/dependencies/ ./
 COPY --from=extractor /extract/spring-boot-loader/ ./
 COPY --from=extractor /extract/snapshot-dependencies/ ./
 COPY --from=extractor /extract/application/ ./
+
+# Set proper permissions
+RUN chown -R appuser:appgroup /app
 
 # Switch to non-root user
 USER appuser
@@ -63,7 +69,7 @@ EXPOSE 9008
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD wget -q --spider http://localhost:9008/actuator/health || exit 1
+  CMD curl -f http://localhost:9008/actuator/health || exit 1
 
 # Set entrypoint with optimized parameters
-ENTRYPOINT ["sh", "-c", "java \ org.springframework.boot.loader.JarLauncher"]
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS org.springframework.boot.loader.JarLauncher"]

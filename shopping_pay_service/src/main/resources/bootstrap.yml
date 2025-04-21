@@ -3,9 +3,8 @@ spring:
     active: dev
   cloud:
     nacos:
+      server-addr: 47.111.110.215:8848
       config:
-
-        server-addr: 47.111.110.215:8848
         namespace: 92513ec8-6807-49d7-ad85-413bea4e84f9
         file-extension: yaml
         prefix: shopping_pay_service
