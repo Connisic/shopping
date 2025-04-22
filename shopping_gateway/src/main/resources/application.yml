@@ -1,0 +1,83 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: shopping-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: user-api
+          uri: lb://shopping-user-customer-api
+          predicates:
+            - Path=/api/user/**
+        - id: goods-api
+          uri: lb://shopping-goods-api
+          predicates:
+            - Path=/api/goods/**
+        - id: order-api
+          uri: lb://shopping-order-customer-api
+          predicates:
+            - Path=/api/order/**
+        - id: cart-api
+          uri: lb://shopping-cart-customer-api
+          predicates:
+            - Path=/api/cart/**
+        - id: search-api
+          uri: lb://shopping-search-customer-api
+          predicates:
+            - Path=/api/search/**
+        - id: category-api
+          uri: lb://shopping-category-customer-api
+          predicates:
+            - Path=/api/category/**
+        - id: seckill-api
+          uri: lb://shopping-seckill-customer-api
+          predicates:
+            - Path=/api/seckill/**
+        - id: recommend-api
+          uri: lb://shopping-recommend-api
+          predicates:
+            - Path=/api/recommend/**
+
+# JWT配置
+jwt:
+  secret: your-secret-key-here
+  ignore-paths: /auth/login,/doc.html,/webjars/**,/swagger-resources/**,/v3/api-docs/**
+
+# Knife4j配置
+knife4j:
+  gateway:
+    enabled: true
+    routes:
+      - name: 用户服务API
+        url: /user-service/v3/api-docs
+        service-name: shopping-user-customer-api
+      - name: 商品服务API
+        url: /goods-service/v3/api-docs
+        service-name: shopping-goods-api
+      - name: 订单服务API
+        url: /order-service/v3/api-docs
+        service-name: shopping-order-customer-api
+      - name: 购物车服务API
+        url: /cart-service/v3/api-docs
+        service-name: shopping-cart-customer-api
+      - name: 搜索服务API
+        url: /search-service/v3/api-docs
+        service-name: shopping-search-customer-api
+      - name: 分类服务API
+        url: /category-service/v3/api-docs
+        service-name: shopping-category-customer-api
+      - name: 秒杀服务API
+        url: /seckill-service/v3/api-docs
+        service-name: shopping-seckill-customer-api
+      - name: 推荐服务API
+        url: /recommend-service/v3/api-docs
+        service-name: shopping-recommend-api

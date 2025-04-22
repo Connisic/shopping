@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class RecommendController {
     @DubboReference
     private RecommendService service;
-    //分页查询推荐商品
+    //分页查询推荐商品v
     @GetMapping("/search")
     public BaseResult<Page> searchByPage(
             @RequestParam(defaultValue = "0") int page,

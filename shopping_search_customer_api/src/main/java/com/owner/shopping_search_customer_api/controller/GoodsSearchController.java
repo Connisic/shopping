@@ -37,4 +37,9 @@ public class GoodsSearchController {
         GoodsDesc goodsDesc = goodsService.findDesc(id);
         return BaseResult.ok(goodsDesc);
     }
+    @PostMapping("/syncAllGoodsToES")
+    BaseResult<Void> syncAllGoodsToES(){
+        searchService.ScheduledSyncToES();
+        return BaseResult.ok();
+    }
 }

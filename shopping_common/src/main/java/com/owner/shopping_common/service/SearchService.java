@@ -32,4 +32,6 @@ public interface SearchService {
      * @param id 下架的商品id
      */
     void delete(Long id);
+
+    void ScheduledSyncToES();
 }
