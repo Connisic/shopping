@@ -21,7 +21,7 @@ public interface RecommendService {
     void deleteUserComment(Long userId, Long goodsId);
 
     // 获取用户评论
-    List<UserGoodsScore> getUserComment();
+    Page<UserGoodsScore> getUserComment(int page,int size);
 
     // 生成用户-物品评分矩阵
     Map<Long, Map<Long, Double>> generateMatrix();

@@ -53,9 +53,9 @@
         <module>shopping_seckill_customer_api</module>
         <!--商品推荐服务-->
         <module>shopping_recommend_service</module>
-        <!-- 商品推荐api-->
+        <!--商品推荐api-->
         <module>shopping_recommend_api</module>
-        <!-- 网关gateway-->
+        <!--网关gateway-->
         <module>shopping_gateway</module>
 
 
