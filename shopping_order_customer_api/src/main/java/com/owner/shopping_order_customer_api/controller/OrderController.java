@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/orders")
+@RequestMapping("/user/order")
 public class OrderController {
     @DubboReference
     private OrderService orderService;
@@ -25,7 +25,7 @@ public class OrderController {
      * @param orders 待生成订单
      * @return 返回生成好的订单
      */
-    @PostMapping("/add")
+    @PostMapping("/orders/add")
     public BaseResult<Orders> add(@RequestBody Orders orders, @RequestHeader Long userId){
         //生成订单
         orders.setUserId(userId);
@@ -43,7 +43,7 @@ public class OrderController {
      * @param id 订单id
      * @return 返回查询结果
      */
-    @GetMapping("/findById")
+    @GetMapping("/orders/findById")
     public BaseResult<Orders> findById(String id){
         Orders orders = orderService.findById(id);
         return BaseResult.ok(orders);
@@ -55,7 +55,7 @@ public class OrderController {
      * @param status 订单状态：1，未付款 2，已付款 3，未发货 4，已发货 5，交易成功 6，交易关闭 7，待评价
      * @return
      */
-    @GetMapping("/findUserOrders")
+    @GetMapping("/orders/findUserOrders")
     public BaseResult<List<Orders>> findUserOrders(@RequestHeader Long userId,Integer status){
         List<Orders> orderes = orderService.findUserOrders(userId, status);
         return BaseResult.ok(orderes);

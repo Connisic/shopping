@@ -1,9 +1,9 @@
 package com.owner.shopping_gateway.filter;
 
-import org.bitbucket.b_c.jose4j.jwt.JwtClaims;
-import org.bitbucket.b_c.jose4j.jwt.consumer.JwtConsumer;
-import org.bitbucket.b_c.jose4j.jwt.consumer.JwtConsumerBuilder;
-import org.bitbucket.b_c.jose4j.keys.HmacKey;
+import org.jose4j.jwt.JwtClaims;
+import org.jose4j.jwt.consumer.JwtConsumer;
+import org.jose4j.jwt.consumer.JwtConsumerBuilder;
+import org.jose4j.keys.HmacKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
+import org.springframework.util.PathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -32,6 +34,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
     private String ignorePaths;
 
     private List<String> whiteList;
+    private final PathMatcher pathMatcher = new AntPathMatcher();
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -43,7 +46,7 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         }
 
         // 白名单路径直接放行
-        if (whiteList.stream().anyMatch(path::contains)) {
+        if (isWhiteListPath(path)) {
             return chain.filter(exchange);
         }
 
@@ -74,6 +77,20 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         } catch (Exception e) {
             return unauthorized(exchange);
         }
+    }
+
+    private boolean isWhiteListPath(String path) {
+        // 检查是否是Swagger/Knife4j相关路径
+        if (path.contains("/v3/api-docs") || 
+            path.contains("/doc.html") || 
+            path.contains("/webjars/") || 
+            path.contains("/swagger-resources") ||
+            path.contains("/swagger-ui")) {
+            return true;
+        }
+
+        // 检查其他白名单路径
+        return whiteList.stream().anyMatch(pattern -> pathMatcher.match(pattern.trim(), path));
     }
 
     private Mono<Void> unauthorized(ServerWebExchange exchange) {

@@ -20,7 +20,7 @@ import java.util.Map;
 
 //支付
 @RestController
-@RequestMapping("/user/payment")
+@RequestMapping("/user/order")
 public class PaymentController {
     @DubboReference
     private ZfbPayService zfbPayService;
@@ -33,7 +33,7 @@ public class PaymentController {
      * @param orderId 订单id
      * @return 返回二维码字符串
      */
-    @PostMapping("/pcPay")
+    @PostMapping("/payment/pcPay")
     public BaseResult<String> pcPay(String orderId){
         Orders orders = orderService.findById(orderId);
         String codeUrl= zfbPayService.pcPay(orders);
@@ -41,7 +41,7 @@ public class PaymentController {
         return BaseResult.ok(codeUrl);
     }
 
-    @PostMapping("/success/notify")
+    @PostMapping("/payment/success/notify")
     @GlobalTransactional
     public BaseResult successNotify(HttpServletRequest request){
         //验签

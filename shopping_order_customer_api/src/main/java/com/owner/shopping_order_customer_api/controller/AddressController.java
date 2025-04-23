@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/address")
+@RequestMapping("/user/order")
 public class AddressController {
     @DubboReference
     private AddressService addressService;
@@ -21,7 +21,7 @@ public class AddressController {
      * 查询所有省份
      * @return 返回省份列表
      */
-    @GetMapping("/findAllProvince")
+    @GetMapping("/address/findAllProvince")
     public BaseResult<List<Province>> findAllProvince(){
         List<Province> allprovince = addressService.findAllprovince();
         return BaseResult.ok(allprovince);
@@ -32,7 +32,7 @@ public class AddressController {
      * @param provinceId 省份id
      * @return 返回该省管辖的所有城市
      */
-    @GetMapping("/findCityByProvince")
+    @GetMapping("/address/findCityByProvince")
     public BaseResult<List<City>> findCityByProvince(Long provinceId){
         List<City> cities = addressService.findCityByProvince(provinceId);
         return BaseResult.ok(cities);
@@ -43,7 +43,7 @@ public class AddressController {
      * @param cityId 城市id
      * @return 返回该城市以下的所有县区
      */
-    @GetMapping("/findAreaByCity")
+    @GetMapping("/address/findAreaByCity")
     public BaseResult<List<Area>> findAreaByCity(Long cityId){
         List<Area> areas = addressService.findAreaByCityId(cityId);
         return BaseResult.ok(areas);
@@ -55,7 +55,7 @@ public class AddressController {
      * @param address 用户新增的地址
      * @return 执行结果
      */
-    @PostMapping("/add")
+    @PostMapping("/address/add")
     public BaseResult add(@RequestHeader Long userId,@RequestBody Address address){
         address.setUserId(userId);
         addressService.add(address);
@@ -68,7 +68,7 @@ public class AddressController {
      * @param address 用户修改之后的地址
      * @return 执行结果
      */
-    @PutMapping("/update")
+    @PutMapping("/address/update")
     public BaseResult update(@RequestHeader Long userId,@RequestBody Address address){
         address.setUserId(userId);
         addressService.update(address);
@@ -80,7 +80,7 @@ public class AddressController {
      * @param id 地址id
      * @return 返回地址详情对象
      */
-    @GetMapping("/findById")
+    @GetMapping("/address/findById")
     public BaseResult<Address> findById(Long id){
         Address address = addressService.findById(id);
         return BaseResult.ok(address);
@@ -91,7 +91,7 @@ public class AddressController {
      * @param userId 用户Id
      * @return 返回所有已有地址
      */
-    @GetMapping("/findByUser")
+    @GetMapping("/address/findByUser")
     public BaseResult<List<Address>> findByUser(@RequestHeader Long userId){
         List<Address> addressList = addressService.findByUser(userId);
         return BaseResult.ok(addressList);
@@ -102,7 +102,7 @@ public class AddressController {
      * @param id 地址id
      * @return 执行结果
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("/address/delete")
     public BaseResult delete(Long id){
         addressService.delete(id);
         return BaseResult.ok();
