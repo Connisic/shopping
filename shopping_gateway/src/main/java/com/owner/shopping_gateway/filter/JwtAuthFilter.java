@@ -1,5 +1,6 @@
 package com.owner.shopping_gateway.filter;
 
+import com.owner.shopping_gateway.utils.JwtUtils;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
@@ -23,6 +24,7 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class JwtAuthFilter implements GlobalFilter, Ordered {
@@ -54,19 +56,13 @@ public class JwtAuthFilter implements GlobalFilter, Ordered {
         if (!StringUtils.hasText(token)) {
             return unauthorized(exchange);
         }
-
+        token=token.replace("Bearer ", "");
         try {
-            JwtConsumer jwtConsumer = new JwtConsumerBuilder()
-                    .setRequireExpirationTime()
-                    .setAllowedClockSkewInSeconds(30)
-                    .setVerificationKey(new HmacKey(jwtSecret.getBytes(StandardCharsets.UTF_8)))
-                    .build();
-
-            JwtClaims claims = jwtConsumer.processToClaims(token);
-            
+            Map<String, Object> verify = JwtUtils.verify(token);
             // 添加用户信息到请求头
             ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
-                    .header("X-User-Id", claims.getSubject())
+                    .header("userId", verify.get("userId").toString())
+                    .header("username", verify.get("username").toString())
                     .build();
 
             ServerWebExchange mutatedExchange = exchange.mutate()
