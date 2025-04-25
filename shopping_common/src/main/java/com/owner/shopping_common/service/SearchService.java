@@ -34,4 +34,6 @@ public interface SearchService {
     void delete(Long id);
 
     void ScheduledSyncToES();
+
+    GoodsDesc findDesc(Long id);
 }

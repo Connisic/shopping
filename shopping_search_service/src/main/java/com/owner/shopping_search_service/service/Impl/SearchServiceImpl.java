@@ -11,6 +11,7 @@ import co.elastic.clients.elasticsearch.indices.AnalyzeRequest;
 import co.elastic.clients.elasticsearch.indices.AnalyzeResponse;
 import co.elastic.clients.elasticsearch.indices.analyze.AnalyzeToken;
 import co.elastic.clients.json.JsonData;
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.owner.shopping_common.pojo.*;
 import com.owner.shopping_common.service.GoodsService;
@@ -32,6 +33,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Slf4j
@@ -50,12 +52,14 @@ public class SearchServiceImpl implements SearchService {
 	@DubboReference
 	private GoodsService goodsService;
 
+
+
 	@SneakyThrows
-	public List<String> analyze(String text, String analyzer) {
+	public List<String> analyze(String text) {
 		//创建分词请求
-		AnalyzeRequest request = AnalyzeRequest.of(a -> a.index("goods")
+		AnalyzeRequest request = AnalyzeRequest.of(a -> a.index("goods_index")
 				.text(text)
-				.analyzer(analyzer));
+				.analyzer("ik_pinyin_analyzer"));
 		//发送分词请求
 		AnalyzeResponse response = client.indices()
 				.analyze(request);
@@ -86,7 +90,7 @@ public class SearchServiceImpl implements SearchService {
 
 		//发起自动补齐请求
 		SearchResponse<Map> response = client.search(
-				s -> s.index("goods")
+				s -> s.index("goods_index")
 						.suggest(suggester), Map.class
 		);
 
@@ -108,10 +112,23 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public GoodsSearchResult search(GoodsSearchParam param) {
+		log.info("搜索条件：{}", param);
 		//构建ES搜索条件
 		NativeQuery nativeQuery = buildQuery(param);
+		
 		//搜索
-		SearchHits<GoodsES> search = template.search(nativeQuery, GoodsES.class);
+		SearchHits<GoodsES> search;
+		try {
+			search = template.search(nativeQuery, GoodsES.class);
+		} catch (Exception e) {
+			log.error("搜索过程中发生异常: {}", e.getMessage(), e);
+			// 返回空结果
+			GoodsSearchResult emptyResult = new GoodsSearchResult();
+			emptyResult.setGoodsPage(new Page<>());
+			emptyResult.setGoodsSearchParam(param);
+			return emptyResult;
+		}
+		
 		//将查询结果封装成MybatisPlus的Page对象
 		//将SearchHit对象转为List对象
 		List<GoodsES> list = new ArrayList<>();
@@ -135,6 +152,7 @@ public class SearchServiceImpl implements SearchService {
 		goodsSearchParam.setLowPrice(param.getLowPrice());
 		//3封装一个查询面板
 		buildSearchPanel(goodsSearchParam, result);
+		log.info("Returning result: {}", JSON.toJSONString(result));
 		return result;
 	}
 
@@ -234,66 +252,99 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public void SyncGoodsToES(GoodsDesc goodsDesc) {
-		//将商品详情对象转换成GoodsES对象
+		try {
+			//将商品详情对象转换成GoodsES对象
+			//商品基本属性
+			GoodsES goodsES = new GoodsES();
+			
+			// 清理需要分词的字段
+			String goodsName = cleanText(goodsDesc.getGoodsName());
+			String caption = cleanText(goodsDesc.getCaption());
+			
+			goodsES.setGoodsName(goodsName);
+			goodsES.setId(goodsDesc.getId());
+			goodsES.setBrand(goodsDesc.getBrand().getName());
+			goodsES.setCaption(caption);
+			goodsES.setPrice(goodsDesc.getPrice());
+			goodsES.setHeaderPic(goodsDesc.getHeaderPic());
 
-		//商品基本属性
-		GoodsES goodsES = new GoodsES();
-		goodsES.setGoodsName(goodsDesc.getGoodsName());
-		goodsES.setId(goodsDesc.getId());
-		goodsES.setBrand(goodsDesc.getBrand()
-				.getName());
-		goodsES.setCaption(goodsDesc.getCaption());
-		goodsES.setPrice(goodsDesc.getPrice());
-		goodsES.setHeaderPic(goodsDesc.getHeaderPic());
+			//类型集合
+			List<String> list = new ArrayList<>();
+			list.add(goodsDesc.getProductType1().getName());
+			list.add(goodsDesc.getProductType2().getName());
+			list.add(goodsDesc.getProductType3().getName());
+			goodsES.setProductType(list);
 
-
-		//类型集合
-		List<String> list = new ArrayList<>();
-		list.add(goodsDesc.getProductType1()
-				.getName());
-		list.add(goodsDesc.getProductType2()
-				.getName());
-		list.add(goodsDesc.getProductType3()
-				.getName());
-		goodsES.setProductType(list);
-
-		//商品规格集合
-		Map<String, List<String>> map = new HashMap<>();
-		//遍历商品规格，封装成goodses所需
-		List<Specification> specifications = goodsDesc.getSpecifications();
-		for (Specification specification : specifications) {
-			//获取规格项
-			List<SpecificationOption> options = specification.getSpecificationOptions();
-			//获取规格项名
-			List<String> optionStrList = new ArrayList<>();
-			for (SpecificationOption option : options) {
-				optionStrList.add(option.getOptionName());
+			//商品规格集合
+			Map<String, List<String>> map = new HashMap<>();
+			//遍历商品规格，封装成goodses所需
+			List<Specification> specifications = goodsDesc.getSpecifications();
+			for (Specification specification : specifications) {
+				//获取规格项
+				List<SpecificationOption> options = specification.getSpecificationOptions();
+				//获取规格项名
+				List<String> optionStrList = new ArrayList<>();
+				for (SpecificationOption option : options) {
+					optionStrList.add(cleanText(option.getOptionName()));
+				}
+				map.put(specification.getSpecName(), optionStrList);
 			}
-			map.put(specification.getSpecName(), optionStrList);
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			goodsES.setSpecification(map);
+			goodsES.setRating(goodsDesc.getRating());
+			goodsES.setSales(goodsDesc.getSales());
+			goodsES.setCreateTime(format.format(goodsDesc.getCreateTime()));
+			
+			//关键词
+			List<String> tags = new ArrayList<>();
+			tags.add(goodsDesc.getBrand().getName());//品牌名为关键词
+			tags.addAll(analyze(goodsName));//商品名分词后为关键词
+			tags.addAll(analyze(caption));//商品副标题分词后为关键词
+			log.info("关键词:{}",tags);
+			goodsES.setTags(tags);
+			
+			//将GoodsES对象存入ES
+			log.info("商品详情:{}",goodsES);
+			repository.save(goodsES);
+
+		} catch (Exception e) {
+			log.error("同步商品到ES异常，ID: {}, 错误: {}", goodsDesc.getId(), e.getMessage());
 		}
-		goodsES.setSpecification(map);
-		//关键词
-		List<String> tags = new ArrayList<>();
-		tags.add(goodsDesc.getBrand()
-				.getName());//品牌名为关键词
-		tags.addAll(analyze(goodsDesc.getGoodsName(), "ik_pinyin"));//商品名分词后为关键词
-		tags.addAll(analyze(goodsDesc.getCaption(), "ik_pinyin"));//商品副标题分词后为关键词
-		goodsES.setTags(tags);
-		//将GoodsES对象存入ES
+	}
 
-		repository.save(goodsES);
-
+	// 清理文本中的特殊字符
+	private String cleanText(String text) {
+		if (text == null) {
+			return "";
+		}
+		
+		// 替换特殊字符
+		return text.replace("\"", " ")
+				  .replace("\\", " ")
+				  .replace("\n", " ")
+				  .replace("\r", " ")
+				  .replace("\t", " ")
+				  .replaceAll("[\\p{Cc}\\p{Cf}]", "")
+				  .replaceAll("\\s+", " ")
+				  .trim();
 	}
 
 	//每天凌晨3点同步到数据库
-	@Scheduled(cron = "0 0 3 * * ? ")
+	// @Scheduled(cron = "0 0 3 * * ? ")
 	@Override
 	public void ScheduledSyncToES() {
 		log.info("开始同步商品数据goods到ES搜索引擎goodsDesc");
 		List<GoodsDesc> all = goodsService.findAllDesc();
+		log.info("商品详情list:{}",all);
 		all.forEach(this::SyncGoodsToES);
 		log.info("同步商品数据goods到ES搜索引擎goodsDesc结束");
 	}
+
+	@Override
+	public GoodsDesc findDesc(Long id) {
+		return goodsService.findDesc(id);
+	}
+
 
 	/**
 	 * 封装查询面板，即根据查询条件，找到对应的商品集合，找到前20个关联度最高的商品进行封装

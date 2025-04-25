@@ -5,6 +5,6 @@ import com.owner.shopping_search_service.service.Impl.SearchServiceImpl;
 
 public class SyncToEs {
 	public static void main(String[] args) {
-		new GoodsService()
+
 	}
 }

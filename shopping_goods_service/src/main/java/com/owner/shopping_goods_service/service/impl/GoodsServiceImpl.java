@@ -24,7 +24,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -39,25 +38,25 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 	@DubboReference
 	private FileService fileService;
 
-	@Resource
+	@Autowired
 	private GoodsMapper goodsMapper;
 
-	@Resource
+	@Autowired
 	private GoodsImageMapper goodsImageMapper;
 
-	@Resource
+	@Autowired
 	private RocketMQTemplate rocketMQTemplate;
 
-	@Resource
+	@Autowired
 	private BrandService brandService;
 
-	@Resource
+	@Autowired
 	private ProductTypeService productTypeService;
 
-	@Resource
+	@Autowired
 	private SpecificationMapper specificationMapper;
 
-	@Resource
+	@Autowired
 	private SpecificationOptionMapper optionMapper;
 
 
