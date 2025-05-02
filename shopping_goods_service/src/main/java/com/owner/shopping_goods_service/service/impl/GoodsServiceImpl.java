@@ -248,8 +248,7 @@ public class GoodsServiceImpl extends ServiceImpl<GoodsMapper, Goods> implements
 	//查询所有商品
 	@Override
 	public List<Goods> findAll() {
-		List<Goods> goods = this.list();
-		return goods;
+		return this.list();
 	}
 
 	@Override

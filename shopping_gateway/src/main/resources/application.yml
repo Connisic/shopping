@@ -5,7 +5,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.141.205:8848
+        server-addr: 118.178.88.182:8848
         namespace: public
         group: DEFAULT_GROUP
     gateway:

@@ -8,6 +8,8 @@ import com.owner.shopping_common.util.RandomUtil;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/user/shoppingUser")
@@ -18,6 +20,10 @@ public class ShoppingUserController {
 
     @DubboReference
     private ShoppingUserService shoppingUserService;
+    @GetMapping("/getAllUser")
+    public BaseResult<List<ShoppingUser>> getAllUser(){
+        return BaseResult.ok(shoppingUserService.getAllUser());
+    }
 
     /**
      * 发送注册短信

@@ -6,6 +6,7 @@ import com.owner.shopping_common.result.BusExceptiion;
 import com.owner.shopping_common.result.CodeEnum;
 import com.owner.shopping_common.service.ShoppingUserService;
 import com.owner.shopping_common.util.Md5Util;
+
 import com.owner.shopping_user_service.mapper.ShoppingUserMapper;
 import com.owner.shopping_user_service.util.JwtUtils;
 import org.apache.dubbo.config.annotation.DubboService;
@@ -131,8 +132,7 @@ public class ShoppingUserServiceImpl implements ShoppingUserService {
 
     @Override
     public List<ShoppingUser> getAllUser() {
-        List<ShoppingUser> users = shoppingUserMapper.selectList(new QueryWrapper<>());
-        return users;
+        return shoppingUserMapper.selectList(new QueryWrapper<>());
     }
 
     /**
