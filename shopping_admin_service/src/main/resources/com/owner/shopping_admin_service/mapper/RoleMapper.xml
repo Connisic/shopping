@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.owner.shopping_admin_service.mapper.RoleMapper">
+    <resultMap id="roleMapper" type="com.owner.shopping_common.pojo.Role">
+        <id property="rid" column="rid"></id>
+        <result property="roleName" column="roleName"></result>
+        <result property="roleDesc" column="roleDesc"></result>
+        <collection property="permissions" column="rid" ofType="com.owner.shopping_common.pojo.Permission">
+            <id property="pid" column="pid"></id>
+            <result property="permissionName" column="permissionName"></result>
+            <result property="url" column="url"></result>
+        </collection>
+    </resultMap>
+    <select id="findById" parameterType="Long" resultMap="roleMapper">
+        select * from bz_role
+                          left join bz_role_permission brp on bz_role.rid = brp.rid
+                          left join bz_permission bp on brp.pid = bp.pid
+        where bz_role.rid=#{rid}
+    </select>
+
+    <delete id="deleteRoleAllAdmin" parameterType="Long">
+        delete from bz_admin_role where rid=#{rid}
+    </delete>
+
+    <delete id="deleteRoleAllPermission" parameterType="Long">
+        delete from bz_role_permission where rid=#{rid}
+    </delete>
+
+    <insert id="addPermissionToRole" parameterType="Long">
+        insert into bz_role_permission values(#{rid},#{pid})
+    </insert>
+</mapper>

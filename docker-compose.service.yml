@@ -1,0 +1,323 @@
+version: '3.8'
+
+services:
+  # 文件服务
+  file-service:
+    build:
+      context: .
+      dockerfile: ./shopping_file_service/Dockerfile
+    container_name: shopping-file-service
+    restart: always
+    ports:
+      - "9003:9003"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 用户服务
+  user-service:
+    build:
+      context: .
+      dockerfile: ./shopping_user_service/Dockerfile
+    container_name: shopping-user-service
+    restart: always
+    ports:
+      - "9006:9006"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 用户API
+  user-api:
+    build:
+      context: .
+      dockerfile: ./shopping_user_customer_api/Dockerfile
+    container_name: shopping-user-api
+    restart: always
+    ports:
+      - "8003:8003"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 商品服务
+  goods-service:
+    build:
+      context: .
+      dockerfile: ./shopping_goods_service/Dockerfile
+    container_name: shopping-goods-service
+    restart: always
+    ports:
+      - "9001:9001"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 分类服务
+  category-service:
+    build:
+      context: .
+      dockerfile: ./shopping_category_service/Dockerfile
+    container_name: shopping-category-service
+    restart: always
+    ports:
+      - "9004:9004"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 分类API
+  category-api:
+    build:
+      context: .
+      dockerfile: ./shopping_category_customer_api/Dockerfile
+    container_name: shopping-category-api
+    restart: always
+    ports:
+      - "8002:8002"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 搜索服务
+  search-service:
+    build:
+      context: .
+      dockerfile: ./shopping_search_service/Dockerfile
+    container_name: shopping-search-service
+    restart: always
+    ports:
+      - "9008:9008"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 搜索API
+  search-api:
+    build:
+      context: .
+      dockerfile: ./shopping_search_customer_api/Dockerfile
+    container_name: shopping-search-api
+    restart: always
+    ports:
+      - "8004:8004"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 购物车服务
+  cart-service:
+    build:
+      context: .
+      dockerfile: ./shopping_cart_service/Dockerfile
+    container_name: shopping-cart-service
+    restart: always
+    ports:
+      - "9009:9009"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 购物车API
+  cart-api:
+    build:
+      context: .
+      dockerfile: ./shopping_cart_customer_api/Dockerfile
+    container_name: shopping-cart-api
+    restart: always
+    ports:
+      - "8005:8005"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 订单服务
+  order-service:
+    build:
+      context: .
+      dockerfile: ./shopping_order_service/Dockerfile
+    container_name: shopping-order-service
+    restart: always
+    ports:
+      - "9010:9010"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 订单API
+  order-api:
+    build:
+      context: .
+      dockerfile: ./shopping_order_customer_api/Dockerfile
+    container_name: shopping-order-api
+    restart: always
+    ports:
+      - "8006:8006"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 支付服务
+  pay-service:
+    build:
+      context: .
+      dockerfile: ./shopping_pay_service/Dockerfile
+    container_name: shopping-pay-service
+    restart: always
+    ports:
+      - "9011:9011"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 秒杀服务
+  seckill-service:
+    build:
+      context: .
+      dockerfile: ./shopping_seckill_service/Dockerfile
+    container_name: shopping-seckill-service
+    restart: always
+    ports:
+      - "9005:9005"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 秒杀API
+  seckill-api:
+    build:
+      context: .
+      dockerfile: ./shopping_seckill_customer_api/Dockerfile
+    container_name: shopping-seckill-api
+    restart: always
+    ports:
+      - "8007:8007"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+  # 消息服务
+  message-service:
+    build:
+      context: .
+      dockerfile: ./shopping_message_service/Dockerfile
+    container_name: shopping-message-service
+    restart: always
+    ports:
+      - "9007:9007"
+    environment:
+      - JAVA_OPTS=-server -Xms96m -Xmx192m
+    deploy:
+      resources:
+        limits:
+          memory: 250M
+
+#  # 推荐服务
+#  recommend-service:
+#    build:
+#      context: .
+#      dockerfile: ./shopping_recommend_service/Dockerfile
+#    container_name: shopping-recommend-service
+#    restart: always
+#    ports:
+#      - "9012:9012"
+#    environment:
+#      - JAVA_OPTS=-server -Xms96m -Xmx192m
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 250M
+#
+#  # 推荐API
+#  recommend-api:
+#    build:
+#      context: .
+#      dockerfile: ./shopping_recommend_api/Dockerfile
+#    container_name: shopping-recommend-api
+#    restart: always
+#    ports:
+#      - "8008:8008"
+#    environment:
+#      - JAVA_OPTS=-server -Xms96m -Xmx192m
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 250M
+
+  # 管理员服务
+  admin-service:
+    build:
+      context: .
+      dockerfile: ./shopping_admin_service/Dockerfile
+    container_name: shopping-admin-service
+    restart: always
+    ports:
+      - "9002:9002"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+
+  # 管理后台API
+  manager-api:
+    build:
+      context: .
+      dockerfile: ./shopping_manager_api/Dockerfile
+    container_name: shopping-manager-api
+    restart: always
+    ports:
+      - "8001:8001"
+    environment:
+      - JAVA_OPTS=-server -Xms128m -Xmx256m
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+

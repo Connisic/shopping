@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 118.178.88.182:8848
+        namespace: 92513ec8-6807-49d7-ad85-413bea4e84f9
+        file-extension: yaml
+        prefix: shopping_category_customer_api
