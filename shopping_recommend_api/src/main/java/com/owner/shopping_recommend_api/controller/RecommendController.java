@@ -63,4 +63,10 @@ public class RecommendController {
 	                                                   @RequestParam(defaultValue = "10") int size) {
 		return BaseResult.ok(service.getUserComment(page,size));
 	}
+
+	@PostMapping("/refresh")
+	public BaseResult<Void> refresh() {
+		service.updateSimilarityMatrix();
+		return BaseResult.ok();
+	}
 }
