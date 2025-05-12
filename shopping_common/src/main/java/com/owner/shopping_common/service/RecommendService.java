@@ -24,11 +24,15 @@ public interface RecommendService {
     Page<UserGoodsScore> getUserComment(int page,int size);
 
     // 生成用户-物品评分矩阵
-    Map<Long, Map<Long, Double>> generateMatrix();
+    void generateMatrix();
 
     // 更新用户-物品评分矩阵
     void updateMatrix(Long userId, Long goodsId, double score);
 
     // 更新相似度矩阵
     void updateSimilarityMatrix();
+
+    void refreshCache();
+
+    void refreshUserRecommendations(Long userId);
 }

@@ -43,7 +43,7 @@ public class CartController {
      * @param num 购物车商品数量
      * @return 执行结果
      */
-    @GetMapping("/handleCart")
+    @PutMapping("/handleCart")
     public BaseResult handleCart(@RequestHeader Long userId,Long goodId,Integer num){
         cartService.handleCart(userId,goodId,num);
         return BaseResult.ok();

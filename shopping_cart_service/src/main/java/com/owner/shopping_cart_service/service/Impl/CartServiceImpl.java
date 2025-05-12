@@ -1,8 +1,10 @@
 package com.owner.shopping_cart_service.service.Impl;
 
+import com.owner.shopping_common.dto.RecommendDto;
 import com.owner.shopping_common.pojo.CartGoods;
 import com.owner.shopping_common.service.CartService;
 import org.apache.dubbo.config.annotation.DubboService;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,7 +23,11 @@ import java.util.Map;
 public class CartServiceImpl implements CartService {
     @Autowired
     private RedisTemplate redisTemplate;
-
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+    
+    private static final String CART_KEY="cartList";
+    private static final String RFRESH_RECOMMEND_QUEUE="refresh_recommend_queue";
     @Override
     public void addCart(Long userId, CartGoods cartGoods) {
         //1 根据userId获取购物车商品集合
@@ -30,13 +36,19 @@ public class CartServiceImpl implements CartService {
         for (CartGoods goods : cartList) {
             if (cartGoods.getGoodId().equals(goods.getGoodId())){//如果添加过则增加该商品数量，
                 goods.setNum(goods.getNum()+cartGoods.getNum());
-                redisTemplate.boundHashOps("cartList").put(userId,cartList);
+                redisTemplate.boundHashOps(CART_KEY).put(userId,cartList);
                 return;
             }
         }
         //否则直接添加到购物车商品集合
         cartList.add(cartGoods);
-        redisTemplate.boundHashOps("cartList").put(userId,cartList);
+        RecommendDto dto = new RecommendDto();
+        dto.setGoodsId(cartGoods.getGoodId());
+        dto.setUserId(userId);
+        List<RecommendDto> list = new ArrayList<>();
+        list.add(dto);
+        rocketMQTemplate.syncSend(RFRESH_RECOMMEND_QUEUE,list);
+        redisTemplate.boundHashOps(CART_KEY).put(userId,cartList);
     }
 
     @Override
@@ -50,7 +62,7 @@ public class CartServiceImpl implements CartService {
             }
         }
         //4、将新的购物车列表保存到redis
-        redisTemplate.boundHashOps("cartList").put(userId,cartList);
+        redisTemplate.boundHashOps(CART_KEY).put(userId,cartList);
     }
 
     @Override
@@ -65,12 +77,12 @@ public class CartServiceImpl implements CartService {
             }
         }
         //4、将新的购物车列表保存到redis
-        redisTemplate.boundHashOps("cartList").put(userId,cartList);
+        redisTemplate.boundHashOps(CART_KEY).put(userId,cartList);
     }
 
     @Override
     public List<CartGoods> findCartList(Long userId) {
-        Object cartList = redisTemplate.boundHashOps("cartList").get(userId);
+        Object cartList = redisTemplate.boundHashOps(CART_KEY).get(userId);
         if (cartList==null){
             return new ArrayList<CartGoods>();
         }else{
@@ -81,7 +93,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public void refreshCartGoods(CartGoods cartGoods) {
         //获取所有用户的购物车
-        BoundHashOperations cartList = redisTemplate.boundHashOps("cartList");
+        BoundHashOperations cartList = redisTemplate.boundHashOps(CART_KEY);
         Map<Long,List<CartGoods>> allCartGoods = cartList.entries();
         Collection<List<CartGoods>> values = allCartGoods.values();
         //遍历所有用户的购物车
@@ -99,14 +111,14 @@ public class CartServiceImpl implements CartService {
         }
 
         //删除原有数据,将改变后的购物车放入redis
-        redisTemplate.delete("cartList");
-        redisTemplate.boundHashOps("cartList").putAll(allCartGoods);
+        redisTemplate.delete(CART_KEY);
+        redisTemplate.boundHashOps(CART_KEY).putAll(allCartGoods);
     }
 
     @Override
     public void deleteCartGoods(Long goodId) {
         //获取所有用户的购物车
-        BoundHashOperations cartList = redisTemplate.boundHashOps("cartList");
+        BoundHashOperations cartList = redisTemplate.boundHashOps(CART_KEY);
         Map<Long,List<CartGoods>> allCartGoods = cartList.entries();
         Collection<List<CartGoods>> values = allCartGoods.values();
         //遍历所有用户的购物车
@@ -122,7 +134,7 @@ public class CartServiceImpl implements CartService {
         }
 
         //删除原有数据,将删除后的购物车放入redis
-        redisTemplate.delete("cartList");
-        redisTemplate.boundHashOps("cartList").putAll(allCartGoods);
+        redisTemplate.delete(CART_KEY);
+        redisTemplate.boundHashOps(CART_KEY).putAll(allCartGoods);
     }
 }

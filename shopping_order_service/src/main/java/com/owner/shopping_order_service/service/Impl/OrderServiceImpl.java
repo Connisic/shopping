@@ -3,6 +3,7 @@ package com.owner.shopping_order_service.service.Impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.owner.shopping_common.dto.RecommendDto;
 import com.owner.shopping_common.pojo.CartGoods;
 import com.owner.shopping_common.pojo.Orders;
 import com.owner.shopping_common.service.OrderService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +37,7 @@ public class OrderServiceImpl extends ServiceImpl<OrdersMapper,Orders>  implemen
     private RocketMQTemplate rocketMQTemplate;
 
     private final String EXPIRE_ORDERS_QUEUE = "expire_orders_queue";
+    private final String RFRESH_RECOMMEND_QUEUE = "refresh_recommend_queue";
 
     @Override
     public Orders add(Orders orders) {
@@ -57,6 +60,12 @@ public class OrderServiceImpl extends ServiceImpl<OrdersMapper,Orders>  implemen
             //数量*单价
             BigDecimal multiply = num.multiply(price);
             sum = sum.add(multiply);
+            RecommendDto dto = new RecommendDto();
+            dto.setGoodsId(cartGood.getGoodId());
+            dto.setUserId(orders.getUserId());
+            List<RecommendDto> list = new ArrayList<>();
+            list.add(dto);
+            rocketMQTemplate.syncSend(RFRESH_RECOMMEND_QUEUE,list);
         }
         orders.setPayment(sum);
         //保存订单
@@ -71,7 +80,6 @@ public class OrderServiceImpl extends ServiceImpl<OrdersMapper,Orders>  implemen
         //发送延时消息 ,30分钟后判断是否支付
         //延时等级1到18分别表示 1s 5s 10s 30s 1m 2m 3m 4m 5m 6m 7m 8m 9m 10m 20m 30m 1h 2h
         rocketMQTemplate.syncSend(EXPIRE_ORDERS_QUEUE, MessageBuilder.withPayload(orders.getId()).build(),15000,14);
-
         return orders;
     }
 
