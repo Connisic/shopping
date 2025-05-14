@@ -56,20 +56,42 @@ public class SearchServiceImpl implements SearchService {
 
 	@SneakyThrows
 	public List<String> analyze(String text) {
-		//创建分词请求
-		AnalyzeRequest request = AnalyzeRequest.of(a -> a.index("goods_index")
+		if (text == null || text.trim().isEmpty()) {
+			return new ArrayList<>();
+		}
+		
+		// 创建分词请求，使用ik_pinyin_analyzer
+		AnalyzeRequest ikPinyinRequest = AnalyzeRequest.of(a -> a
+				.index("goods_index")
 				.text(text)
 				.analyzer("ik_pinyin_analyzer"));
-		//发送分词请求
-		AnalyzeResponse response = client.indices()
-				.analyze(request);
-		//处理分词请求
-		List<AnalyzeToken> tokens = response.tokens();
-
-		List<String> words = new ArrayList<>();
-		tokens.forEach(token -> words.add(token.token()));
-
-		return words;
+		
+		// 增加ik_max_word分词器，增加召回率
+		AnalyzeRequest ikMaxWordRequest = AnalyzeRequest.of(a -> a
+				.index("goods_index")
+				.text(text)
+				.analyzer("ik_max_word"));
+		
+		// 发送分词请求
+		AnalyzeResponse ikPinyinResponse = client.indices().analyze(ikPinyinRequest);
+		AnalyzeResponse ikMaxWordResponse = client.indices().analyze(ikMaxWordRequest);
+		
+		// 处理分词结果
+		Set<String> uniqueWords = new HashSet<>(); // 使用Set去重
+		
+		// 添加ik_pinyin_analyzer分词结果
+		List<AnalyzeToken> ikPinyinTokens = ikPinyinResponse.tokens();
+		if (ikPinyinTokens != null) {
+			ikPinyinTokens.forEach(token -> uniqueWords.add(token.token()));
+		}
+		
+		// 添加ik_max_word分词结果
+		List<AnalyzeToken> ikMaxWordTokens = ikMaxWordResponse.tokens();
+		if (ikMaxWordTokens != null) {
+			ikMaxWordTokens.forEach(token -> uniqueWords.add(token.token()));
+		}
+		
+		return new ArrayList<>(uniqueWords);
 	}
 
 	//自动补齐
@@ -174,9 +196,42 @@ public class SearchServiceImpl implements SearchService {
 			builder.must(matchAllQuery._toQuery());
 		} else {
 			String keyword = param.getKeyword();
-			MultiMatchQuery query = MultiMatchQuery.of(q -> q.query(keyword)
-					.fields("goodsName", "caption", "brand"));
-			builder.must(query._toQuery());
+			
+			// 改进1: 优化关键词搜索，改用简单的多字段加权查询
+			MultiMatchQuery multiMatchQuery = MultiMatchQuery.of(q -> q
+					.query(keyword)
+					.fields("goodsName^3", "caption^2", "brand^1.5") // 设置字段权重，商品名权重最高
+			);
+			builder.must(multiMatchQuery._toQuery());
+			
+			// 改进2: 添加模糊查询，处理可能的拼写错误
+			FuzzyQuery fuzzyGoodsNameQuery = FuzzyQuery.of(q -> q
+					.field("goodsName")
+					.value(keyword)
+					.fuzziness("AUTO") // 自动确定编辑距离
+					.prefixLength(1) // 前缀长度
+			);
+			
+			FuzzyQuery fuzzyBrandQuery = FuzzyQuery.of(q -> q
+					.field("brand")
+					.value(keyword)
+					.fuzziness("AUTO")
+					.prefixLength(1)
+			);
+			
+			// 改进3: 将模糊查询添加为should条件，提高召回率
+			builder.should(fuzzyGoodsNameQuery._toQuery());
+			builder.should(fuzzyBrandQuery._toQuery());
+			
+			// 改进4: 使用前缀查询来支持部分匹配
+			PrefixQuery prefixQuery = PrefixQuery.of(q -> q
+					.field("goodsName")
+					.value(keyword.toLowerCase())
+			);
+			builder.should(prefixQuery._toQuery());
+			
+			// 设置最小匹配条件，至少一个should条件需要匹配
+			builder.minimumShouldMatch("1");
 		}
 		//3 如果有品牌名，精准查询品牌
 		String brand = param.getBrand();
@@ -208,12 +263,29 @@ public class SearchServiceImpl implements SearchService {
 			entries.forEach(entry -> {
 				String key = entry.getKey();
 				String value = entry.getValue();
-				//查询集合或者对象，其域field为集合或对象名.属性.搜索条件关键字
-				TermQuery specificationQuery = TermQuery.of(q -> q.field("specification." + key + ".keyword")
+				
+				// 创建一个嵌套布尔查询，提高规格项搜索的灵活性
+				BoolQuery.Builder specBoolBuilder = new BoolQuery.Builder();
+				
+				// 保留原有的keyword精确匹配
+				TermQuery exactMatchQuery = TermQuery.of(q -> q
+						.field("specification." + key + ".keyword")
 						.value(value));
-				builder.must(specificationQuery._toQuery());
+				specBoolBuilder.should(exactMatchQuery._toQuery());
+				
+				// 增加对规格值的模糊匹配
+				MatchQuery fuzzyMatchQuery = MatchQuery.of(q -> q
+						.field("specification." + key)
+						.query(value)
+						.fuzziness("AUTO"));
+				specBoolBuilder.should(fuzzyMatchQuery._toQuery());
+				
+				// 要求至少一个条件匹配
+				specBoolBuilder.minimumShouldMatch("1");
+				
+				// 将规格项查询添加到主查询中
+				builder.must(specBoolBuilder.build()._toQuery());
 			});
-
 		}
 		//将前面整合的条件加入nativeQueryBuilder
 		nativeQueryBuilder.withQuery(builder.build()
@@ -228,23 +300,37 @@ public class SearchServiceImpl implements SearchService {
 		if (StringUtils.hasText(sortFiled) && StringUtils.hasText(sort)) {
 			Sort sortParam = null;
 			if (sortFiled.equals("NEW")) {
+				// 修正NEW排序逻辑，使其更符合语义
 				if (sort.equals("ASC")) {
-					sortParam = Sort.by(Sort.Direction.DESC, "id");
+					sortParam = Sort.by(Sort.Direction.ASC, "createTime"); // 使用创建时间而非ID
+				} else if (sort.equals("DESC")) {
+					sortParam = Sort.by(Sort.Direction.DESC, "createTime");
 				}
-				if (sort.equals("DESC")) {
-					sortParam = Sort.by(Sort.Direction.ASC, "id");
-				}
-			}
-			if (sortFiled.equals("PRICE")) {
+			} else if (sortFiled.equals("PRICE")) {
 				if (sort.equals("ASC")) {
 					sortParam = Sort.by(Sort.Direction.ASC, "price");
-				}
-				if (sort.equals("DESC")) {
+				} else if (sort.equals("DESC")) {
 					sortParam = Sort.by(Sort.Direction.DESC, "price");
 				}
+			} else if (sortFiled.equals("SALES")) {
+				// 增加销量排序
+				if (sort.equals("ASC")) {
+					sortParam = Sort.by(Sort.Direction.ASC, "sales");
+				} else if (sort.equals("DESC")) {
+					sortParam = Sort.by(Sort.Direction.DESC, "sales");
+				}
+			} else if (sortFiled.equals("RATING")) {
+				// 增加评分排序
+				if (sort.equals("ASC")) {
+					sortParam = Sort.by(Sort.Direction.ASC, "rating");
+				} else if (sort.equals("DESC")) {
+					sortParam = Sort.by(Sort.Direction.DESC, "rating");
+				}
 			}
-			nativeQueryBuilder.withSort(sortParam);
-
+			
+			if (sortParam != null) {
+				nativeQueryBuilder.withSort(sortParam);
+			}
 		}
 		//8 返回查询条件对象
 		return nativeQueryBuilder.build();//Builder.build生成对应的query对象
@@ -252,92 +338,167 @@ public class SearchServiceImpl implements SearchService {
 
 	@Override
 	public void SyncGoodsToES(GoodsDesc goodsDesc) {
-		try {
-			//将商品详情对象转换成GoodsES对象
-			//商品基本属性
-			GoodsES goodsES = new GoodsES();
-			
-			// 清理需要分词的字段
-			String goodsName = cleanText(goodsDesc.getGoodsName());
-			String caption = cleanText(goodsDesc.getCaption());
-			
-			goodsES.setGoodsName(goodsName);
-			goodsES.setId(goodsDesc.getId());
-			goodsES.setBrand(goodsDesc.getBrand().getName());
-			goodsES.setCaption(caption);
-			goodsES.setPrice(goodsDesc.getPrice());
-			goodsES.setHeaderPic(goodsDesc.getHeaderPic());
+		int maxRetries = 3;
+		int retryCount = 0;
+		boolean success = false;
+		
+		while (!success && retryCount < maxRetries) {
+			try {
+				// 将商品详情对象转换成GoodsES对象
+				// 商品基本属性
+				GoodsES goodsES = new GoodsES();
+				
+				// 清理需要分词的字段
+				String goodsName = cleanText(goodsDesc.getGoodsName());
+				String caption = cleanText(goodsDesc.getCaption());
+				
+				goodsES.setGoodsName(goodsName);
+				goodsES.setId(goodsDesc.getId());
+				goodsES.setBrand(goodsDesc.getBrand().getName());
+				goodsES.setCaption(caption);
+				goodsES.setPrice(goodsDesc.getPrice());
+				goodsES.setHeaderPic(goodsDesc.getHeaderPic());
 
-			//类型集合
-			List<String> list = new ArrayList<>();
-			list.add(goodsDesc.getProductType1().getName());
-			list.add(goodsDesc.getProductType2().getName());
-			list.add(goodsDesc.getProductType3().getName());
-			goodsES.setProductType(list);
+				// 类型集合
+				List<String> list = new ArrayList<>();
+				list.add(goodsDesc.getProductType1().getName());
+				list.add(goodsDesc.getProductType2().getName());
+				list.add(goodsDesc.getProductType3().getName());
+				goodsES.setProductType(list);
 
-			//商品规格集合
-			Map<String, List<String>> map = new HashMap<>();
-			//遍历商品规格，封装成goodses所需
-			List<Specification> specifications = goodsDesc.getSpecifications();
-			for (Specification specification : specifications) {
-				//获取规格项
-				List<SpecificationOption> options = specification.getSpecificationOptions();
-				//获取规格项名
-				List<String> optionStrList = new ArrayList<>();
-				for (SpecificationOption option : options) {
-					optionStrList.add(cleanText(option.getOptionName()));
+				// 商品规格集合
+				Map<String, List<String>> map = new HashMap<>();
+				// 遍历商品规格，封装成goodses所需
+				List<Specification> specifications = goodsDesc.getSpecifications();
+				for (Specification specification : specifications) {
+					// 获取规格项
+					List<SpecificationOption> options = specification.getSpecificationOptions();
+					// 获取规格项名
+					List<String> optionStrList = new ArrayList<>();
+					for (SpecificationOption option : options) {
+						optionStrList.add(cleanText(option.getOptionName()));
+					}
+					map.put(specification.getSpecName(), optionStrList);
 				}
-				map.put(specification.getSpecName(), optionStrList);
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				goodsES.setSpecification(map);
+				goodsES.setRating(goodsDesc.getRating());
+				goodsES.setSales(goodsDesc.getSales());
+				goodsES.setCreateTime(format.format(goodsDesc.getCreateTime()));
+				
+				// 关键词强化，增加更多维度的搜索关键词
+				Set<String> tagsSet = new HashSet<>(); // 使用Set防止重复
+				
+				// 1. 添加品牌名为关键词
+				tagsSet.add(goodsDesc.getBrand().getName());
+				
+				// 2. 商品名分词后为关键词
+				tagsSet.addAll(analyze(goodsName));
+				
+				// 3. 商品副标题分词后为关键词
+				tagsSet.addAll(analyze(caption));
+				
+				// 4. 添加类目名作为关键词
+				tagsSet.add(goodsDesc.getProductType1().getName());
+				tagsSet.add(goodsDesc.getProductType2().getName());
+				tagsSet.add(goodsDesc.getProductType3().getName());
+				
+				// 5. 添加规格选项作为关键词
+				for (Specification specification : specifications) {
+					for (SpecificationOption option : specification.getSpecificationOptions()) {
+						tagsSet.add(cleanText(option.getOptionName()));
+					}
+				}
+				
+				List<String> tags = new ArrayList<>(tagsSet);
+				log.info("商品 [{}] 的关键词: {}", goodsDesc.getId(), tags);
+				goodsES.setTags(tags);
+				
+				// 将GoodsES对象存入ES
+				repository.save(goodsES);
+				
+				// 标记成功
+				success = true;
+				log.info("成功同步商品到ES, ID: {}", goodsDesc.getId());
+				
+			} catch (Exception e) {
+				retryCount++;
+				log.error("同步商品到ES异常 (尝试 {}/{}), ID: {}, 错误: {}", 
+						retryCount, maxRetries, goodsDesc.getId(), e.getMessage());
+				
+				// 如果不是最后一次尝试，等待一段时间后重试
+				if (retryCount < maxRetries) {
+					try {
+						Thread.sleep(1000 * retryCount); // 指数退避策略
+					} catch (InterruptedException ie) {
+						Thread.currentThread().interrupt();
+						log.error("线程中断", ie);
+					}
+				}
 			}
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			goodsES.setSpecification(map);
-			goodsES.setRating(goodsDesc.getRating());
-			goodsES.setSales(goodsDesc.getSales());
-			goodsES.setCreateTime(format.format(goodsDesc.getCreateTime()));
-			
-			//关键词
-			List<String> tags = new ArrayList<>();
-			tags.add(goodsDesc.getBrand().getName());//品牌名为关键词
-			tags.addAll(analyze(goodsName));//商品名分词后为关键词
-			tags.addAll(analyze(caption));//商品副标题分词后为关键词
-			log.info("关键词:{}",tags);
-			goodsES.setTags(tags);
-			
-			//将GoodsES对象存入ES
-			log.info("商品详情:{}",goodsES);
-			repository.save(goodsES);
-
-		} catch (Exception e) {
-			log.error("同步商品到ES异常，ID: {}, 错误: {}", goodsDesc.getId(), e.getMessage());
+		}
+		
+		if (!success) {
+			log.error("同步商品到ES失败，已达到最大重试次数, ID: {}", goodsDesc.getId());
 		}
 	}
 
-	// 清理文本中的特殊字符
+	// 增强后的文本清理方法
 	private String cleanText(String text) {
 		if (text == null) {
 			return "";
 		}
 		
-		// 替换特殊字符
-		return text.replace("\"", " ")
+		// 第一步：基本清理，去除所有特殊字符
+		String cleaned = text.replace("\"", " ")
 				  .replace("\\", " ")
 				  .replace("\n", " ")
 				  .replace("\r", " ")
 				  .replace("\t", " ")
+				  // 移除HTML标签
+				  .replaceAll("<[^>]*>", " ")
+				  // 移除控制字符
 				  .replaceAll("[\\p{Cc}\\p{Cf}]", "")
+				  // 替换多个空格为单个空格
 				  .replaceAll("\\s+", " ")
 				  .trim();
+		
+		// 第二步：移除常见的无意义字符（包括英文标点和中文标点）
+		cleaned = cleaned.replaceAll("[~`!@#$%^&*()+=|{}':;,.<>/?]", " ") // 英文标点
+				  .replaceAll("\\p{Punct}", " ") // 所有标点符号
+				  .replaceAll("\\s+", " ")
+				  .trim()
+				  .toLowerCase(); // 转为小写以提高匹配率
+		
+		return cleaned;
 	}
 
 	//每天凌晨3点同步到数据库
-	// @Scheduled(cron = "0 0 3 * * ? ")
+	@Scheduled(cron = "0 0 3 * * ? ")
 	@Override
 	public void ScheduledSyncToES() {
 		log.info("开始同步商品数据goods到ES搜索引擎goodsDesc");
-		List<GoodsDesc> all = goodsService.findAllDesc();
-		log.info("商品详情list:{}",all);
-		all.forEach(this::SyncGoodsToES);
-		log.info("同步商品数据goods到ES搜索引擎goodsDesc结束");
+		try {
+			List<GoodsDesc> all = goodsService.findAllDesc();
+			log.info("获取到商品详情数量: {}", all.size());
+			
+			int successCount = 0;
+			int failCount = 0;
+			
+			for (GoodsDesc goodsDesc : all) {
+				try {
+					SyncGoodsToES(goodsDesc);
+					successCount++;
+				} catch (Exception e) {
+					failCount++;
+					log.error("同步商品 ID: {} 失败: {}", goodsDesc.getId(), e.getMessage(), e);
+				}
+			}
+			
+			log.info("同步商品数据完成，成功: {}，失败: {}", successCount, failCount);
+		} catch (Exception e) {
+			log.error("同步商品数据过程中发生异常: {}", e.getMessage(), e);
+		}
 	}
 
 	@Override

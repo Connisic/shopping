@@ -232,7 +232,13 @@ public class RecommendServiceImpl implements RecommendService {
     }
 
     private  void refreshRecommendation(Long userId){
-        redisTemplate.delete(RECOMMEND_KEY_PREFIX + userId);
+        List<ShoppingUser> allUser = userService.getAllUser();
+        for (ShoppingUser user : allUser) {
+            if (user.getId().equals(userId)){
+                continue;
+            }
+            redisTemplate.delete(RECOMMEND_KEY_PREFIX + user.getId());
+        }
     }
 
     /**
@@ -262,9 +268,7 @@ public class RecommendServiceImpl implements RecommendService {
             
             // 更新评分矩阵
             updateMatrix(userId, goodsId, score);
-            
-            // 刷新用户推荐
-            getUserRecommendations(userId);
+            refreshRecommendation(userId);
         } catch (Exception e) {
             log.error("添加用户评论时出错: {}", e.getMessage(), e);
             throw new BusExceptiion(CodeEnum.SYSTEM_ERROR);
@@ -401,6 +405,8 @@ public class RecommendServiceImpl implements RecommendService {
                     ratings.put(goodsId, score);
                 }
             }
+            user_matrix.get(userId).put(goodsId, score);
+            item_matrix.get(goodsId).put(userId, score);
             log.info("已更新用户{}对商品{}的评分为{}", userId, goodsId, score);
             
             // 更新Redis缓存
